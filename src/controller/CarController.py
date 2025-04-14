@@ -7,24 +7,33 @@ class CarController:
     def __init__(self):
         self.service = CarService()
 
-    def _add_error_to_wrapper(self, wrapper: CarWrapper, error: str) -> None:
-        if error != "":
-            wrapper.add_error(error)
-
     def create_or_update_car(self, wrapper: CarWrapper) -> CarWrapper:
-        car = self.service.create_or_update_car(wrapper)
-        return CarFactory.create_wrapper(car)
+        if wrapper.get_category() == None:
+            wrapper.add_error("Category is missing!")
+        if wrapper.get_licence_plate() == None:
+            wrapper.add_error("Licence plate is missing!")
+        if wrapper.get_type() == None:
+            wrapper.add_error("Type is missing!")
+        if wrapper.get_rental_fee() == None:
+            wrapper.add_error("Rental fee is missing!")
+        if (
+            wrapper.get_category() != None
+            and wrapper.get_licence_plate() != None
+            and wrapper.get_type() != None
+            and wrapper.get_rental_fee() != None
+        ):
+            car = self.service.save_or_update_car(wrapper)
+            return CarFactory.create_wrapper(car)
 
     def get_car_by_id(self, id: int) -> CarWrapper:
-        error: str = ""
+        wrapper = CarWrapper()
         try:
             car = self.service.get_car_by_id(id)
+            wrapper = CarFactory.create_wrapper(car)
         except Exception as e:
-            error = str(e)
-        finally:
-            wrapper: CarWrapper = CarFactory.create_wrapper(car)
-            self._add_error_to_wrapper(wrapper, error)
-            return wrapper
+            wrapper.add_error(str(e))
+
+        return wrapper
 
     def get_all_cars(self) -> list[CarWrapper]:
         cars = self.service.get_all_cars()
@@ -34,12 +43,9 @@ class CarController:
 
         return wrappers
 
-    def remove_car_by_id(self, id: int) -> None:
-        error: str = ""
+    def remove_car_by_id(self, id: int) -> CarWrapper:
+        wrapper = CarWrapper()
         try:
             self.service.remove_car_by_id(id)
         except Exception as e:
-            error = str(e)
-        finally:
-            wrapper: CarWrapper = CarWrapper()
-            self._add_error_to_wrapper(wrapper, error)
+            wrapper.add_error(str(e))

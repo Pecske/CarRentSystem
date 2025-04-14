@@ -9,7 +9,7 @@ class CarService:
     def __init__(self):
         self.repo = CarRepository()
 
-    def create_or_update_car(self, wrapper: CarWrapper) -> Car:
+    def save_or_update_car(self, wrapper: CarWrapper) -> Car:
         car = CarFactory.create_car(wrapper)
 
         return self.repo.save_or_update(car)
