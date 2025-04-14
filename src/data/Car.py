@@ -4,12 +4,11 @@ from data.DataBase import DataBase
 
 class Car(DataBase):
 
-    def __init__(self, licence_plate: str, type: str, rental_fee: int):
-        super().__init__()
+    def __init__(self, id: int, licence_plate: str, type: str, rental_fee: int):
+        super().__init__(id)
         self.licence_plate = licence_plate
         self.type = type
         self.rental_fee = rental_fee
-        pass
 
     @abstractmethod
     def get_licence_plate(self) -> str:

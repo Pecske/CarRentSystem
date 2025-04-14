@@ -2,8 +2,8 @@ from data.Car import Car
 
 
 class PassengerCar(Car):
-    def __init__(self, licence_plate, type, rental_fee):
-        super().__init__(licence_plate, type, rental_fee)
+    def __init__(self, id: int, licence_plate: str, type: str, rental_fee: int):
+        super().__init__(id, licence_plate, type, rental_fee)
 
     def get_id(self):
         return super().get_id()

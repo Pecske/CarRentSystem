@@ -2,9 +2,9 @@ from abc import ABC, abstractmethod
 
 
 class DataBase(ABC):
-    def __init__(self):
+    def __init__(self, id: int):
         super().__init__()
-        self.id: None | int = None
+        self.id = id
 
     @abstractmethod
     def get_id(self) -> int:
