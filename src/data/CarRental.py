@@ -4,10 +4,10 @@ from data.DataBase import DataBase
 
 class CarRental(DataBase):
 
-    def __init__(self, name: str):
-        super().__init__()
+    def __init__(self,id : int, name: str, cars: list[Car] = list()):
+        super().__init__(id)
         self.name = name
-        self.cars: list[Car] = list()
+        self.cars = cars
 
     def get_id(self):
         return super().get_id()
@@ -24,8 +24,11 @@ class CarRental(DataBase):
     def get_cars(self) -> list[Car]:
         return self.cars
 
+    def set_cars(self, value: list[Car]) -> None:
+        self.cars = value
+
     def add_car(self, car: Car) -> None:
         self.cars.append(car)
-    
-    def remove_car(self, car: Car) ->None:
+
+    def remove_car(self, car: Car) -> None:
         self.cars.remove(car)

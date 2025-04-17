@@ -18,13 +18,14 @@ class RepositoryBase(ABC):
         return self.datas.values()
 
     @abstractmethod
-    def save_or_update(self, data: DataBase) -> None:
+    def save_or_update(self, data: DataBase) -> DataBase:
         id = data.get_id()
         if id == None:
             id = self.id_counter
             self.id_counter += 1
 
         self.datas[id] = data
+        return data
 
     @abstractmethod
     def delete_by_id(self, id: int) -> None:

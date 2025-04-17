@@ -1,7 +1,5 @@
 from repository.CarRepository import CarRepository
 from data.Car import Car
-from data.CarWrapper import CarWrapper
-from utils.CarFactory import CarFactory
 
 
 class CarService:
@@ -9,9 +7,7 @@ class CarService:
     def __init__(self):
         self.repo = CarRepository()
 
-    def save_or_update_car(self, wrapper: CarWrapper) -> Car:
-        car = CarFactory.create_car(wrapper)
-
+    def save_or_update_car(self, car: Car) -> Car:
         return self.repo.save_or_update(car)
 
     def get_car_by_id(self, id: int) -> Car:

@@ -1,42 +1,43 @@
-from data.CarWrapper import CarWrapper
 from data.PassengerCar import PassengerCar
 from data.Truck import Truck
 from data.Car import Car
+from utils.FactoryBase import FactoryBase
 from utils.CarCategory import CarCategory
+from dto.CarView import CarView
 
 
-class CarFactory:
+class CarFactory(FactoryBase):
 
     def __init__(self):
-        pass
+        super().__init__()
 
-    def create_car(wrapper: CarWrapper) -> Car:
-        category = wrapper.get_category()
-        if category == CarCategory.PassengerCar:
-            return PassengerCar(
-                wrapper.get_id(),
-                wrapper.get_licence_plate(),
-                wrapper.get_type(),
-                wrapper.get_rental_fee(),
-            )
-        else:
-            return Truck(
-                wrapper.get_id(),
-                wrapper.get_licence_plate(),
-                wrapper.get_type(),
-                wrapper.get_rental_fee(),
-            )
-
-    def create_wrapper(car: Car) -> CarWrapper:
+    def from_data_to_view(data: Car) -> CarView:
         category: CarCategory | None = None
-        if isinstance(car, PassengerCar):
+        if isinstance(data, PassengerCar):
             category = CarCategory.PassengerCar
         else:
             category = CarCategory.Truck
-        return CarWrapper(
+        return CarView(
             category,
-            car.get_id(),
-            car.get_licence_plate(),
-            car.get_type(),
-            car.get_rental_fee(),
+            data.get_id(),
+            data.get_licence_plate(),
+            data.get_type(),
+            data.get_rental_fee(),
         )
+
+    def from_view_to_data(view: CarView) -> Car:
+        category = view.get_category()
+        if category == CarCategory.PassengerCar:
+            return PassengerCar(
+                view.get_id(),
+                view.get_licence_plate(),
+                view.get_type(),
+                view.get_rental_fee(),
+            )
+        else:
+            return Truck(
+                view.get_id(),
+                view.get_licence_plate(),
+                view.get_type(),
+                view.get_rental_fee(),
+            )

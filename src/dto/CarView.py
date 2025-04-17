@@ -1,9 +1,7 @@
 from utils.CarCategory import CarCategory
-from data.WrapperBase import WrapperBase
 
 
-class CarWrapper(WrapperBase):
-
+class CarView:
     def __init__(
         self,
         category: CarCategory,
@@ -12,18 +10,11 @@ class CarWrapper(WrapperBase):
         type: str,
         rental_fee: int,
     ):
-        super().__init__()
         self.category = category
         self.id = id
         self.licence_plate = licence_plate
         self.type = type
         self.rental_fee = rental_fee
-
-    def get_errors(self):
-        return super().get_errors()
-
-    def add_error(self, error: str):
-        super().add_error(error)
 
     def get_category(self) -> CarCategory:
         return self.category
@@ -39,3 +30,15 @@ class CarWrapper(WrapperBase):
 
     def get_rental_fee(self) -> int:
         return self.rental_fee
+
+    def set_category(self, value: CarCategory) -> None:
+        self.category = value
+
+    def set_licence_plate(self, value: str) -> None:
+        self.licence_plate = value
+
+    def set_type(self, value: str) -> None:
+        self.type = value
+
+    def set_rental_fee(self, value: int) -> None:
+        self.rental_fee = value

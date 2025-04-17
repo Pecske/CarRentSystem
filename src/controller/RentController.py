@@ -1,63 +1,64 @@
-from data.RentWrapper import RentWrapper
-from service.CarRentalService import CarRentalService
 from service.CarService import CarService
 from service.RentService import RentService
+from utils.Wrapper import Wrapper
+from data.Rent import Rent
 
 
 class RentController:
     def __init__(self):
-        self.car_rental_service = CarRentalService()
         self.car_service = CarService()
         self.rent_service = RentService()
 
-    def save_or_update_rent(self, wrapper: RentWrapper) -> RentWrapper:
-        if wrapper.get_rent() == None:
-            wrapper.add_error("Missing rent information!")
+    def save_or_update_rent(self, wrapper: Wrapper[Rent]) -> Wrapper[Rent]:
+        wrapped_obj = wrapper.get_wrapped_obj()
+        result = Wrapper[Rent]()
+        if wrapped_obj == None:
+            result.add_error("Missing rent information!")
         else:
-            rent = wrapper.get_rent()
-            possible_car = rent.get_car()
+            possible_car = wrapped_obj.get_car()
             if possible_car == None:
-                wrapper.add_error("Missing car information!")
+                result.add_error("Missing car information!")
             else:
                 car_id = possible_car.get_id()
                 try:
                     found_car = self.car_service.get_car_by_id(car_id)
                     if self.rent_service.is_car_reserved(
-                        found_car, rent.get_rental_time()
+                        found_car, wrapped_obj.get_rental_time()
                     ):
-                        wrapper.add_error("Car is already reserved on the given date!")
+                        result.add_error("Car is already reserved on the given date!")
                     else:
-                        rent.set_car(found_car)
-                        saved_rent = self.rent_service.save_or_update_rent(rent)
-                        wrapper.set_rent(saved_rent)
+                        wrapped_obj.set_car(found_car)
+                        saved_rent = self.rent_service.save_or_update_rent(wrapped_obj)
+                        result.set_wrapped_obj(saved_rent)
                 except Exception as e:
-                    wrapper.add_error(str(e))
+                    result.add_error(str(e))
 
-        return wrapper
+        return result
 
-    def get_rent_by_id(self, id: int) -> RentWrapper:
-        wrapper = RentWrapper()
+    def get_rent_by_id(self, id: int) -> Wrapper[Rent]:
+        result = Wrapper[Rent]()
         try:
             found_rent = self.rent_service.get_rent_by_id(id)
-            wrapper.set_rent(found_rent)
+            result.set_wrapped_obj(found_rent)
         except Exception as e:
-            wrapper.add_error(str(e))
+            result.add_error(str(e))
 
-        return wrapper
+        return result
 
-    def get_all_rents(self) -> list[RentWrapper]:
-        wrappers: list[RentWrapper] = list()
+    def get_all_rents(self) -> list[Wrapper[Rent]]:
+        results: list[Wrapper[Rent]] = list()
         rents = self.rent_service.get_all_rents()
         for rent in rents:
-            wrappers.append(RentWrapper(rent))
+            wrapper = Wrapper[Rent](rent)
+            results.append(wrapper)
 
-        return wrappers
+        return results
 
-    def remove_rent_by_id(self, id: int) -> RentWrapper:
-        wrapper = RentWrapper()
+    def remove_rent_by_id(self, id: int) -> Wrapper[Rent]:
+        result = Wrapper[Rent]()
         try:
             self.rent_service.delete_rent_by_id(id)
         except Exception as e:
-            wrapper.add_error(str(e))
+            result.add_error(str(e))
 
-        return wrapper
+        return result
