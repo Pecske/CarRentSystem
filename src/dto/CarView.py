@@ -42,3 +42,6 @@ class CarView:
 
     def set_rental_fee(self, value: int) -> None:
         self.rental_fee = value
+
+    def __str__(self):
+        return f"Id: {self.get_id()} - Category: {self.get_category()} - Licence Plate: {self.get_licence_plate()} - Type: {self.get_type()} - Rental Fee: {self.get_rental_fee()}"

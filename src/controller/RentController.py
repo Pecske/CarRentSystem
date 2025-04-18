@@ -1,7 +1,9 @@
 from service.CarService import CarService
 from service.RentService import RentService
 from utils.Wrapper import Wrapper
+from dto.RentView import RentView
 from data.Rent import Rent
+from utils.RentFactory import RentFactory
 
 
 class RentController:
@@ -9,56 +11,78 @@ class RentController:
         self.car_service = CarService()
         self.rent_service = RentService()
 
-    def save_or_update_rent(self, wrapper: Wrapper[Rent]) -> Wrapper[Rent]:
-        wrapped_obj = wrapper.get_wrapped_obj()
-        result = Wrapper[Rent]()
-        if wrapped_obj == None:
-            result.add_error("Missing rent information!")
-        else:
-            possible_car = wrapped_obj.get_car()
-            if possible_car == None:
-                result.add_error("Missing car information!")
-            else:
-                car_id = possible_car.get_id()
-                try:
-                    found_car = self.car_service.get_car_by_id(car_id)
-                    if self.rent_service.is_car_reserved(
-                        found_car, wrapped_obj.get_rental_time()
-                    ):
-                        result.add_error("Car is already reserved on the given date!")
-                    else:
-                        wrapped_obj.set_car(found_car)
-                        saved_rent = self.rent_service.save_or_update_rent(wrapped_obj)
-                        result.set_wrapped_obj(saved_rent)
-                except Exception as e:
-                    result.add_error(str(e))
-
+    def _create_rent(self, dto: RentView) -> RentView:
+        result: RentView | None = None
+        car_id = dto.get_car_view().get_id()
+        rental_time = dto.get_rental_time()
+        found_car = self.car_service.get_car_by_id(car_id)
+        if not self.rent_service.is_car_reserved(found_car, rental_time):
+            new_rent = Rent(car=found_car, rental_time=rental_time)
+            saved_rent = self.rent_service.save_or_update_rent(new_rent)
+            result = RentFactory.from_data_to_view(saved_rent)
         return result
 
-    def get_rent_by_id(self, id: int) -> Wrapper[Rent]:
-        result = Wrapper[Rent]()
+    def save_or_update_rent(self, dto: RentView) -> Wrapper[RentView]:
+        result = Wrapper[RentView]()
+        if dto != None:
+            possible_car = dto.get_car_view()
+            if possible_car != None:
+                try:
+                    saved_rent = self._create_rent(dto)
+                    if saved_rent != None:
+                        result.set_wrapped_obj(saved_rent)
+                    else:
+                        result.add_error("Car is already reserved on the given date!")
+                except Exception as e:
+                    result.add_error(str(e))
+            else:
+                result.add_error("Missing car information!")
+        else:
+            result.add_error("Missing rent information!")
+        return result
+
+    def get_rent_by_id(self, id: int) -> Wrapper[RentView]:
+        result = Wrapper[RentView]()
         try:
             found_rent = self.rent_service.get_rent_by_id(id)
-            result.set_wrapped_obj(found_rent)
+            result.set_wrapped_obj(RentFactory.from_data_to_view(found_rent))
         except Exception as e:
             result.add_error(str(e))
 
         return result
 
-    def get_all_rents(self) -> list[Wrapper[Rent]]:
-        results: list[Wrapper[Rent]] = list()
+    def get_all_rents(self) -> Wrapper[list[RentView]]:
+        result: Wrapper[list[RentView]] = list()
         rents = self.rent_service.get_all_rents()
+        views: list[RentView] = list()
         for rent in rents:
-            wrapper = Wrapper[Rent](rent)
-            results.append(wrapper)
+            view = RentFactory.from_data_to_view(rent)
+            views.append(view)
 
-        return results
+        result.set_wrapped_obj(views)
+        return result
 
-    def remove_rent_by_id(self, id: int) -> Wrapper[Rent]:
-        result = Wrapper[Rent]()
+    def remove_rent_by_id(self, id: int) -> Wrapper[RentView]:
+        result = Wrapper[RentView]()
         try:
             self.rent_service.delete_rent_by_id(id)
         except Exception as e:
             result.add_error(str(e))
 
+        return result
+
+    def is_car_reserved(self, dto: RentView) -> Wrapper[bool]:
+        result: Wrapper[bool] = Wrapper()
+        car = dto.get_car_view()
+        if car != None:
+            try:
+                found_car = self.car_service.get_car_by_id(car.get_id())
+                is_reserved = self.rent_service.is_car_reserved(
+                    found_car, dto.get_rental_time()
+                )
+                result.set_wrapped_obj(is_reserved)
+            except Exception as e:
+                result.add_error(str(e))
+        else:
+            result.add_error("Missing car info")
         return result

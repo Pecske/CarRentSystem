@@ -30,11 +30,11 @@ class RentService:
             self.repo.delete_by_id(id)
         except KeyError:
             raise KeyError("There is no rent by the given id!")
-    
-    def is_car_reserved(self,car : Car, time : datetime) -> bool:
+
+    def is_car_reserved(self, car: Car, time: datetime) -> bool:
         rents = self.get_all_rents()
         for rent in rents:
             if rent.get_car() == car and rent.get_rental_time() == time:
                 return True
-        
+
         return False

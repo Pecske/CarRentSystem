@@ -27,19 +27,17 @@ class CarRentalController:
                         cars_to_save.append(created_car)
         return cars_to_save
 
-    def save_or_update_rental(
-        self, wrapper: Wrapper[CarRentalView]
-    ) -> Wrapper[CarRentalView]:
-        wrapped_obj = wrapper.get_wrapped_obj()
-        if wrapped_obj() != None:
-            cars_to_save = self._get_cars_to_save(wrapped_obj.get_cars())
-            rental = CarRental(wrapped_obj.get_name(), cars_to_save)
+    def save_or_update_rental(self, dto: CarRentalView) -> Wrapper[CarRentalView]:
+        result = Wrapper[CarRentalView]()
+        if dto != None:
+            cars_to_save = self._get_cars_to_save(dto.get_cars())
+            rental = CarRental(name=dto.get_name(), cars=cars_to_save)
             saved_rental = self.car_rental_service.save_or_update_rental(rental)
-            wrapper.set_wrapped_obj(CarRentalFactory.from_data_to_view(saved_rental))
+            result.set_wrapped_obj(CarRentalFactory.from_data_to_view(saved_rental))
         else:
-            wrapper.add_error("Car Rental data must be given!")
+            result.add_error("Car Rental data must be given!")
 
-        return wrapper
+        return result
 
     def get_rental_by_id(self, id: int) -> Wrapper[CarRentalView]:
         wrapper = Wrapper[CarRentalView]()
@@ -51,14 +49,16 @@ class CarRentalController:
 
         return wrapper
 
-    def get_all_rentals(self) -> list[Wrapper[CarRentalView]]:
+    def get_all_rentals(self) -> Wrapper[list[CarRentalView]]:
         rentals = self.car_rental_service.get_all_rentals()
-        wrappers: list[Wrapper[CarRentalView]] = list()
+        result = Wrapper[list[CarRentalView]]()
+        views: list[CarRentalView] = list()
         for rental in rentals:
-            wrapper = Wrapper[CarRentalView](CarRentalFactory.from_data_to_view(rental))
-            wrappers.append(wrapper)
+            view = CarRentalFactory.from_data_to_view(rental)
+            views.append(view)
+        result.set_wrapped_obj(views)
 
-        return wrappers
+        return result
 
     def remove_rental_by_id(self, id: int) -> Wrapper[CarRentalView]:
         wrapper = Wrapper[CarRentalView]()
@@ -70,14 +70,11 @@ class CarRentalController:
         return wrapper
 
     def add_car_to_rental(
-        self, rental_id: int, wrapper: Wrapper[CarView]
+        self, rental_id: int, car_dto: CarView
     ) -> Wrapper[CarRentalView]:
-        wrapped_obj = wrapper.get_wrapped_obj()
         result = Wrapper[CarRentalView]()
-        if wrapped_obj == None:
-            result.add_error("Car info must be given!")
-        else:
-            car_id = wrapped_obj.get_id()
+        if car_dto != None:
+            car_id = car_dto.get_id()
             if car_id != None:
                 try:
                     found_car = self.car_service.get_car_by_id(car_id)
@@ -89,18 +86,16 @@ class CarRentalController:
                     result.add_error(str(e))
             else:
                 result.add_error("Car id must be given!")
-
+        else:
+            result.add_error("Car info must be given!")
         return result
 
     def remove_car_from_rental(
-        self, rental_id: int, wrapper: Wrapper[CarView]
+        self, rental_id: int, dto: CarView
     ) -> Wrapper[CarRentalView]:
-        wrapped_obj = wrapper.get_wrapped_obj()
         result = Wrapper[CarRentalView]()
-        if wrapped_obj == None:
-            result.add_error("Car info must be given!")
-        else:
-            car_id = wrapped_obj.get_id()
+        if dto != None:
+            car_id = dto.get_id()
             if car_id != None:
                 try:
                     found_car = self.car_service.get_car_by_id(car_id)
@@ -112,4 +107,6 @@ class CarRentalController:
                     result.add_error(str(e))
             else:
                 result.add_error("Car id must be given!")
+        else:
+            result.add_error("Car info must be given!")
         return result
