@@ -1,9 +1,9 @@
-from data.Car import Car
-from data.PassengerCar import PassengerCar
+from menu.MainPage import MainPage
 
 
 def main() -> None:
-    car: Car = PassengerCar("", "", 0)
+    main = MainPage(0, "Main Page")
+    main.run()
     pass
 
 

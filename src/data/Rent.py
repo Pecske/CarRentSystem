@@ -1,4 +1,4 @@
-from Car import Car
+from data.Car import Car
 from datetime import datetime
 from data.DataBase import DataBase
 

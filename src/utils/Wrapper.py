@@ -4,7 +4,7 @@ T = TypeVar("T")
 
 
 class Wrapper(Generic[T]):
-    def __init__(self, obj: T) -> None:
+    def __init__(self, obj: T = None) -> None:
         super().__init__()
         self.wrapped_obj = obj
         self.errors: list[str] = list()
