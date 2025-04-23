@@ -4,7 +4,7 @@ from data.DataBase import DataBase
 
 
 class Rent(DataBase):
-    def __init__(self, id: int, car: Car, rental_time: datetime):
+    def __init__(self, car: Car, rental_time: datetime, id: int | None = None):
         super().__init__(id)
         self.car = car
         self.rental_time = rental_time

@@ -6,7 +6,7 @@ class RepositoryBase(ABC):
 
     def __init__(self):
         super().__init__()
-        self.id_counter = 0
+        self.id_counter = 1
         self.datas: dict[int, DataBase] = dict()
 
     @abstractmethod
@@ -22,6 +22,7 @@ class RepositoryBase(ABC):
         id = data.get_id()
         if id == None:
             id = self.id_counter
+            data.set_id(id)
             self.id_counter += 1
 
         self.datas[id] = data

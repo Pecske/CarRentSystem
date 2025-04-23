@@ -2,14 +2,29 @@ from menu.CarRentPage import CarRentPage
 from menu.PageBase import PageBase
 from menu.ExitPage import ExitPage
 from menu.Item import Item
+from utils.FileService import FileService
+from utils.DependencyController import DependencyController
 import sys
 import os
 
 
 class MainPage(PageBase):
-    def __init__(self, page_id, menu_name):
+    CAR_RENTAL_PATH = "resources/carrental.json"
+    RENTAL_PATH = "resources/rents.json"
+
+    def __init__(self, container: DependencyController, page_id, menu_name):
         super().__init__(page_id, menu_name)
-        self.pages = (CarRentPage(1), ExitPage(2))
+        self.container = container
+        self.pages = (CarRentPage(1, self.container.get_menu_service()), ExitPage(2))
+        self._init_data()
+
+    def _init_data(self) -> None:
+        file_service = self.container.get_file_service()
+        try:
+            file_service.save_car_rental(self.CAR_RENTAL_PATH)
+            file_service.save_rents(self.RENTAL_PATH)
+        except Exception as e:
+            print(str(e))
 
     def _select_page(self) -> int:
         menu_item = Item("", self.pages)
@@ -29,7 +44,6 @@ class MainPage(PageBase):
 
     def run(self):
         while True:
-            self._clear_console()
             selected_page = self._select_page()
             for page in self.pages:
                 if page.get_id() == selected_page:

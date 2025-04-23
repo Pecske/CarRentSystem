@@ -12,11 +12,15 @@ class MenuService:
 
     T = TypeVar("T")
 
-    def __init__(self):
-        self.car_rental_controller = CarRentalController()
-        self.car_controller = CarController()
-        self.rent_controller = RentController()
-        pass
+    def __init__(
+        self,
+        car_rental_controller: CarRentalController,
+        car_controller: CarController,
+        rent_controller: RentController,
+    ) -> None:
+        self.car_rental_controller = car_rental_controller
+        self.car_controller = car_controller
+        self.rent_controller = rent_controller
 
     def _join_errors(self, errors: list[str]) -> str:
         errors_joined = ""

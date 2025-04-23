@@ -2,5 +2,5 @@ from enum import StrEnum
 
 
 class CarCategory(StrEnum):
-    PassengerCar = "passenger"
+    Passenger = "passenger"
     Truck = "truck"

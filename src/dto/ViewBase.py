@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 
 
 class ViewBase(ABC):
+
     def __init__(self, id: int):
         self.id = id
 

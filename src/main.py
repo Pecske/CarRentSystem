@@ -1,8 +1,9 @@
 from menu.MainPage import MainPage
-
+from utils.DependencyController import DependencyController
 
 def main() -> None:
-    main = MainPage(0, "Main Page")
+    container = DependencyController()
+    main = MainPage(container,0, "Main Page")
     main.run()
     pass
 

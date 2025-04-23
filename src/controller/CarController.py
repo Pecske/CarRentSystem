@@ -5,8 +5,8 @@ from dto.CarView import CarView
 
 
 class CarController:
-    def __init__(self):
-        self.service = CarService()
+    def __init__(self, service: CarService):
+        self.service = service
 
     def create_or_update_car(self, dto: CarView) -> Wrapper[CarView]:
         result = Wrapper[CarView]()

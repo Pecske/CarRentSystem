@@ -1,37 +1,33 @@
-from abc import abstractmethod
 from data.DataBase import DataBase
+from data.Money import Money
 
 
 class Car(DataBase):
 
-    def __init__(self, id: int, licence_plate: str, type: str, rental_fee: int):
+    def __init__(
+        self, licence_plate: str, type: str, rental_fee: Money, id: int | None = None
+    ):
         super().__init__(id)
         self.licence_plate = licence_plate
         self.type = type
         self.rental_fee = rental_fee
 
-    @abstractmethod
     def get_licence_plate(self) -> str:
         return self.licence_plate
 
-    @abstractmethod
     def get_type(self) -> str:
         return self.type
 
-    @abstractmethod
-    def get_rental_fee(self) -> int:
+    def get_rental_fee(self) -> Money:
         return self.rental_fee
 
-    @abstractmethod
     def set_licence_plate(self, value: str) -> None:
         self.licence_plate = value
 
-    @abstractmethod
     def set_type(self, value: str) -> None:
         self.type = value
 
-    @abstractmethod
-    def set_rental_fee(self, value: int) -> None:
+    def set_rental_fee(self, value: Money) -> None:
         self.rental_fee = value
 
     def __eq__(self, other) -> bool:
@@ -44,11 +40,7 @@ class Car(DataBase):
         return False
 
     def __hash__(self):
-        return hash(
-            7 * hash(self.licence_plate) * hash(self.type) * hash(self.rental_fee)
-        )
+        return hash(hash(self.licence_plate) * hash(self.type) * hash(self.rental_fee))
 
     def __str__(self) -> str:
-        return "Licence plate: {}\nType: ,{}\nRental Fee: ".format(
-            self.licence_plate, self.type, self.rental_fee
-        )
+        return f"Licence plate: {self.licence_plate}\nType: ,{self.type}\nRental Fee: {self.rental_fee}"

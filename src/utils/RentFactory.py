@@ -11,14 +11,14 @@ class RentFactory(FactoryBase):
 
     def from_data_to_view(data: Rent) -> RentView:
         return RentView(
-            data.get_id(),
             CarFactory.from_data_to_view(data.get_car()),
             data.get_rental_time(),
+            data.get_id(),
         )
 
     def from_view_to_data(view: RentView) -> Rent:
         return Rent(
-            view.get_id(),
             CarFactory.from_view_to_data(view.get_car_view()),
             view.get_rental_time(),
+            view.get_id(),
         )

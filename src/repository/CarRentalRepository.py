@@ -1,7 +1,7 @@
 from repository.RepositoryBase import RepositoryBase
 
 
-class CarRenalRepository(RepositoryBase):
+class CarRentalRepository(RepositoryBase):
     def __init__(self):
         super().__init__()
 

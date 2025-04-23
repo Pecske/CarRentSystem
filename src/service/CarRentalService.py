@@ -1,11 +1,11 @@
-from repository.CarRentalRepository import CarRenalRepository
+from repository.CarRentalRepository import CarRentalRepository
 from data.CarRental import CarRental
 from data.Car import Car
 
 
 class CarRentalService:
-    def __init__(self):
-        self.repo = CarRenalRepository()
+    def __init__(self, repo: CarRentalRepository):
+        self.repo = repo
 
     def save_or_update_rental(self, rental: CarRental) -> CarRental:
         return self.repo.save_or_update(rental)

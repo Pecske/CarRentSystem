@@ -5,8 +5,8 @@ from datetime import datetime
 
 
 class RentService:
-    def __init__(self):
-        self.repo = RentRepository()
+    def __init__(self, repo: RentRepository):
+        self.repo = repo
 
     def save_or_update_rent(self, rent: Rent) -> Rent:
         date = rent.get_rental_time()

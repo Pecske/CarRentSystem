@@ -1,9 +1,12 @@
 from data.Car import Car
+from data.Money import Money
 
 
 class PassengerCar(Car):
-    def __init__(self, id: int, licence_plate: str, type: str, rental_fee: int):
-        super().__init__(id, licence_plate, type, rental_fee)
+    def __init__(
+        self, licence_plate: str, type: str, rental_fee: Money, id: int | None = None
+    ):
+        super().__init__(licence_plate, type, rental_fee, id)
 
     def get_id(self):
         return super().get_id()
@@ -28,3 +31,6 @@ class PassengerCar(Car):
 
     def set_rental_fee(self, value):
         return super().set_rental_fee(value)
+
+    def __hash__(self):
+        return 7 * super().__hash__()

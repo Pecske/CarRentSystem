@@ -4,8 +4,8 @@ from data.Car import Car
 
 class CarService:
 
-    def __init__(self):
-        self.repo = CarRepository()
+    def __init__(self, repo: CarRepository):
+        self.repo = repo
 
     def save_or_update_car(self, car: Car) -> Car:
         return self.repo.save_or_update(car)

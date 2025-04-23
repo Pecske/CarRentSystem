@@ -7,9 +7,9 @@ from utils.RentFactory import RentFactory
 
 
 class RentController:
-    def __init__(self):
-        self.car_service = CarService()
-        self.rent_service = RentService()
+    def __init__(self, car_service: CarService, rent_service: RentService):
+        self.car_service = car_service
+        self.rent_service = rent_service
 
     def _create_rent(self, dto: RentView) -> RentView:
         result: RentView | None = None
@@ -17,7 +17,7 @@ class RentController:
         rental_time = dto.get_rental_time()
         found_car = self.car_service.get_car_by_id(car_id)
         if not self.rent_service.is_car_reserved(found_car, rental_time):
-            new_rent = Rent(car=found_car, rental_time=rental_time)
+            new_rent = Rent(car=found_car, rental_time=rental_time, id=dto.get_id())
             saved_rent = self.rent_service.save_or_update_rent(new_rent)
             result = RentFactory.from_data_to_view(saved_rent)
         return result

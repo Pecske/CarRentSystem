@@ -2,6 +2,7 @@ from utils.Wrapper import Wrapper
 from dto.CarView import CarView
 from dto.CarRentalView import CarRentalView
 from utils.CarRentalFactory import CarRentalFactory
+from utils.CarFactory import CarFactory
 from service.CarService import CarService
 from service.CarRentalService import CarRentalService
 from data.Car import Car
@@ -9,9 +10,9 @@ from data.CarRental import CarRental
 
 
 class CarRentalController:
-    def __init__(self):
-        self.car_service = CarService()
-        self.car_rental_service = CarRentalService()
+    def __init__(self, car_service: CarService, car_rental_serivce: CarRentalService):
+        self.car_service = car_service
+        self.car_rental_service = car_rental_serivce
 
     def _get_cars_to_save(self, cars: list[CarView]) -> list[Car]:
         cars_to_save: list[Car] = list()
@@ -19,19 +20,19 @@ class CarRentalController:
             for car in cars:
                 car_id = car.get_id()
                 if car_id != None:
-                    try:
-                        found_car = self.car_service.get_car_by_id(car_id)
-                        cars_to_save.append(found_car)
-                    except:
-                        created_car = self.car_service.save_or_update_car(car)
-                        cars_to_save.append(created_car)
+                    found_car = self.car_service.get_car_by_id(car_id)
+                    cars_to_save.append(found_car)
+                else:
+                    possible_car = CarFactory.from_view_to_data(car)
+                    created_car = self.car_service.save_or_update_car(possible_car)
+                    cars_to_save.append(created_car)
         return cars_to_save
 
     def save_or_update_rental(self, dto: CarRentalView) -> Wrapper[CarRentalView]:
         result = Wrapper[CarRentalView]()
         if dto != None:
             cars_to_save = self._get_cars_to_save(dto.get_cars())
-            rental = CarRental(name=dto.get_name(), cars=cars_to_save)
+            rental = CarRental(name=dto.get_name(), cars=cars_to_save, id=dto.get_id())
             saved_rental = self.car_rental_service.save_or_update_rental(rental)
             result.set_wrapped_obj(CarRentalFactory.from_data_to_view(saved_rental))
         else:

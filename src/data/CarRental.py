@@ -4,7 +4,7 @@ from data.DataBase import DataBase
 
 class CarRental(DataBase):
 
-    def __init__(self,id : int, name: str, cars: list[Car] = list()):
+    def __init__(self, name: str, cars: list[Car] = list(), id: int | None = None):
         super().__init__(id)
         self.name = name
         self.cars = cars
