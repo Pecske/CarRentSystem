@@ -7,7 +7,7 @@ from utils.RentFactory import RentFactory
 
 
 class RentController:
-    def __init__(self, car_service: CarService, rent_service: RentService):
+    def __init__(self, car_service: CarService, rent_service: RentService) -> None:
         self.car_service = car_service
         self.rent_service = rent_service
 
@@ -52,7 +52,7 @@ class RentController:
         return result
 
     def get_all_rents(self) -> Wrapper[list[RentView]]:
-        result: Wrapper[list[RentView]] = list()
+        result = Wrapper[list[RentView]]()
         rents = self.rent_service.get_all_rents()
         views: list[RentView] = list()
         for rent in rents:

@@ -33,7 +33,7 @@ class RentView(Serializeable):
         self.rental_time = value
 
     def print(self):
-        return f"{self.get_rental_time()}\t{self.get_car_view()}"
+        return f"{self.get_id()} {self.get_rental_time()}\t{self.get_car_view()}"
 
     def serialize(self):
         return {
@@ -52,3 +52,6 @@ class RentView(Serializeable):
             return RentView(car, reserved_date, id)
         except Exception:
             raise Exception("Deserialization of rent failed!")
+
+    def __str__(self):
+        return f"{self.get_id()} - {self.get_rental_time()} - {self.get_car_view()}"

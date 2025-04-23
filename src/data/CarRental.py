@@ -4,15 +4,17 @@ from data.DataBase import DataBase
 
 class CarRental(DataBase):
 
-    def __init__(self, name: str, cars: list[Car] = list(), id: int | None = None):
+    def __init__(
+        self, name: str, cars: list[Car] = list(), id: int | None = None
+    ) -> None:
         super().__init__(id)
         self.name = name
         self.cars = cars
 
-    def get_id(self):
+    def get_id(self) -> int:
         return super().get_id()
 
-    def set_id(self, value):
+    def set_id(self, value) -> None:
         super().set_id(value)
 
     def get_name(self) -> str:

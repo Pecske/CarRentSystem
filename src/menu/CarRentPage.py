@@ -18,7 +18,7 @@ class CarRentPage(PageBase):
         return self.get_item().get_selection_result(Item(question, source))
 
     def _get_car_id(self, rental_id: int) -> int:
-        question = "Which car would u like to choose from?"
+        question = "Which car would u like to rent?"
         source = self.service.get_car_rental_by_id(rental_id)
         return self.get_item().get_selection_result(Item(question, source.get_cars()))
 
@@ -38,13 +38,8 @@ class CarRentPage(PageBase):
         possible_rent = RentView(car_view=car, rental_time=rental_date)
         return self.service.save_or_update_rent(possible_rent)
 
-    def get_id(self):
-        return super().get_id()
-
-    def set_id(self, value):
-        return super().set_id(value)
-
-    def run(self):
+    def run(self) -> None:
+        self.print_header()
         try:
             rental_id = self._get_car_rental_id()
             car_id = self._get_car_id(rental_id)
@@ -53,6 +48,3 @@ class CarRentPage(PageBase):
             saved_rent = self._create_rent(car, rental_date)
         except Exception as e:
             print(str(e))
-
-    def print(self):
-        return super().print()

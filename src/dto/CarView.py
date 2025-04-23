@@ -93,4 +93,4 @@ class CarView(Serializeable):
             raise Exception("Deserialization of car failed!")
 
     def __str__(self):
-        return f"Id: {self.get_id()} - Category: {self.get_category()} - Licence Plate: {self.get_licence_plate()} - Type: {self.get_type()} - Rental Fee: {self.get_rental_fee()} {self.get_rental_currency}"
+        return f"Category: {self.get_category()} - Licence Plate: {self.get_licence_plate()} - Type: {self.get_type()} - Rental Fee: {self.get_rental_fee()} {self.get_rental_currency()}"

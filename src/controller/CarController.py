@@ -5,7 +5,7 @@ from dto.CarView import CarView
 
 
 class CarController:
-    def __init__(self, service: CarService):
+    def __init__(self, service: CarService) -> None:
         self.service = service
 
     def create_or_update_car(self, dto: CarView) -> Wrapper[CarView]:
@@ -58,3 +58,4 @@ class CarController:
             self.service.remove_car_by_id(id)
         except Exception as e:
             wrapper.add_error(str(e))
+        return wrapper

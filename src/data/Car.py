@@ -6,7 +6,7 @@ class Car(DataBase):
 
     def __init__(
         self, licence_plate: str, type: str, rental_fee: Money, id: int | None = None
-    ):
+    ) -> None:
         super().__init__(id)
         self.licence_plate = licence_plate
         self.type = type
@@ -39,8 +39,8 @@ class Car(DataBase):
             )
         return False
 
-    def __hash__(self):
-        return hash(hash(self.licence_plate) * hash(self.type) * hash(self.rental_fee))
+    def __hash__(self) -> int:
+        return hash(self.licence_plate) * hash(self.type) * hash(self.rental_fee)
 
     def __str__(self) -> str:
         return f"Licence plate: {self.licence_plate}\nType: ,{self.type}\nRental Fee: {self.rental_fee}"

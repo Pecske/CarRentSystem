@@ -9,7 +9,7 @@ class PageItem:
 
     def _selection_item(self, question: str, options: list[ViewBase]) -> int:
         picked_option: int | None = None
-        print(question)
+        print(question + "\n")
         valid_ids: list[int] = list()
         if len(options) > 0:
             for option in options:
@@ -31,9 +31,8 @@ class PageItem:
             raise Exception("There are no items to choose from!")
 
     def _yes_no_item(self, question: str) -> bool:
-        print(question)
         while True:
-            answer = input("y/n :")
+            answer = input(question)
             if answer.lower() == "y":
                 return True
             elif answer.lower() == "n":
@@ -57,6 +56,10 @@ class PageItem:
                 print(str(e))
         return rental_date
 
+    def _view_only_item(self, source: list[ViewBase]) -> None:
+        for item in source:
+            print(item)
+
     def get_selection_result(self, item: Item) -> int:
         return self._selection_item(item.get_question(), item.get_source())
 
@@ -65,3 +68,9 @@ class PageItem:
 
     def get_yes_no_result(self, question: str) -> bool:
         return self._yes_no_item(question)
+
+    def get_view_result(self, item: Item) -> bool:
+        self._view_only_item(item.get_source())
+        while True:
+            if self.get_yes_no_result(item.get_question()):
+                break

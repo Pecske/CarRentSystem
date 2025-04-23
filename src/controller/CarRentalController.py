@@ -10,7 +10,9 @@ from data.CarRental import CarRental
 
 
 class CarRentalController:
-    def __init__(self, car_service: CarService, car_rental_serivce: CarRentalService):
+    def __init__(
+        self, car_service: CarService, car_rental_serivce: CarRentalService
+    ) -> None:
         self.car_service = car_service
         self.car_rental_service = car_rental_serivce
 

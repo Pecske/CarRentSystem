@@ -54,3 +54,11 @@ class MenuService:
     def save_or_update_rent(self, rent: RentView) -> RentView:
         result = self.rent_controller.save_or_update_rent(rent)
         return self._unwrap_object(result)
+
+    def get_all_rents(self) -> list[RentView]:
+        result = self.rent_controller.get_all_rents()
+        return self._unwrap_object(result)
+
+    def remove_rent_by_id(self, id: int) -> None:
+        result = self.rent_controller.remove_rent_by_id(id)
+        self._unwrap_object(result)
