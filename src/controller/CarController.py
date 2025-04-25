@@ -11,22 +11,22 @@ class CarController:
     def create_or_update_car(self, dto: CarView) -> Wrapper[CarView]:
         result = Wrapper[CarView]()
         if (
-            dto.get_category() != None
-            and dto.get_licence_plate() != None
-            and dto.get_type() != None
-            and dto.get_rental_fee() != None
+            dto.get_category() is not None
+            and dto.get_licence_plate() is not None
+            and dto.get_type() is not None
+            and dto.get_rental_fee() is not None
         ):
             possible_car = CarFactory.from_view_to_data(dto)
             saved_car = self.service.save_or_update_car(possible_car)
             car_view = CarFactory.from_data_to_view(saved_car)
             result.set_wrapped_obj(car_view)
-        if dto.get_category() == None:
+        if dto.get_category() is None:
             result.add_error("Category is missing!")
-        if dto.get_licence_plate() == None:
+        if dto.get_licence_plate() is None:
             result.add_error("Licence plate is missing!")
-        if dto.get_type() == None:
+        if dto.get_type() is None:
             result.add_error("Type is missing!")
-        if dto.get_rental_fee() == None:
+        if dto.get_rental_fee() is None:
             result.add_error("Rental fee is missing!")
         return result
 

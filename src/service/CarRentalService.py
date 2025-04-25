@@ -8,6 +8,14 @@ class CarRentalService:
         self.repo = repo
 
     def save_or_update_rental(self, rental: CarRental) -> CarRental:
+        if rental.get_id() is not None:
+            existing_rental = self.get_rental_by_id(rental.get_id())
+            existing_cars = existing_rental.get_cars()
+            if len(existing_cars) > 0 and len(rental.get_cars()) > 0:
+                for car in rental.get_cars():
+                    if car not in existing_cars:
+                        existing_cars.append(car)
+                rental.set_cars(existing_cars)
         return self.repo.save_or_update(rental)
 
     def get_rental_by_id(self, id: int) -> CarRental:

@@ -2,10 +2,13 @@ from dto.ViewBase import ViewBase
 
 
 class Item:
-    def __init__(self, question: str, source: list[ViewBase]):
+    def __init__(
+        self,
+        question: str,
+        source: list[ViewBase] = None,
+    ) -> None:
         self.question = question
         self.source = source
-        pass
 
     def get_question(self) -> str:
         return self.question

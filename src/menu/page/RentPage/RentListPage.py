@@ -1,6 +1,6 @@
-from menu.PageBase import PageBase
-from menu.MenuService import MenuService
-from menu.Item import Item
+from menu.page.PageBase import PageBase
+from menu.service.MenuService import MenuService
+from menu.utils.Item import Item
 
 
 class RentListPage(PageBase):
@@ -9,10 +9,10 @@ class RentListPage(PageBase):
         self.service = service
 
     def _get_rents(self) -> None:
-        question = "Go back? (y/n): "
+        question = "Go back?"
         source = self.service.get_all_rents()
-        self.get_item().get_view_result(Item(question, source))
+        return self.get_item().get_view_result(Item(question, source))
 
     def run(self) -> None:
-        self.print_header()
+        super().run()
         self._get_rents()

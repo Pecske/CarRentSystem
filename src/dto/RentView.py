@@ -1,5 +1,5 @@
 from dto.CarView import CarView
-from datetime import datetime
+from datetime import date
 from utils.Serializeable import Serializeable
 
 ID = "id"
@@ -9,7 +9,7 @@ DATE = "date"
 
 class RentView(Serializeable):
 
-    def __init__(self, car_view: CarView, rental_time: datetime, id: int | None = None):
+    def __init__(self, car_view: CarView, rental_time: date, id: int | None = None):
         super().__init__(id)
         self.car_view = car_view
         self.rental_time = rental_time
@@ -26,10 +26,10 @@ class RentView(Serializeable):
     def set_car_view(self, value: CarView) -> None:
         self.car_view = value
 
-    def get_rental_time(self) -> datetime:
+    def get_rental_time(self) -> date:
         return self.rental_time
 
-    def set_rental_time(self, value: datetime) -> None:
+    def set_rental_time(self, value: date) -> None:
         self.rental_time = value
 
     def print(self):
@@ -46,9 +46,9 @@ class RentView(Serializeable):
         try:
             id = int(dct.get(ID)) if dct.get(ID) else None
             car = CarView.de_serialize(dct.get(CAR)) if dct.get(CAR) else None
-            date = dct.get(DATE) if dct.get(DATE) else None
-            year, month, day = map(int, date.split("-"))
-            reserved_date = datetime(year=year, month=month, day=day)
+            rent_date = dct.get(DATE) if dct.get(DATE) else None
+            year, month, day = map(int, rent_date.split("-"))
+            reserved_date = date(year=year, month=month, day=day)
             return RentView(car, reserved_date, id)
         except Exception:
             raise Exception("Deserialization of rent failed!")

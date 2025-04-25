@@ -59,6 +59,22 @@ class MenuService:
         result = self.rent_controller.get_all_rents()
         return self._unwrap_object(result)
 
-    def remove_rent_by_id(self, id: int) -> None:
+    def delete_rent_by_id(self, id: int) -> None:
         result = self.rent_controller.remove_rent_by_id(id)
+        self._unwrap_object(result)
+
+    def save_or_update_car(self, car: CarView) -> CarView:
+        result = self.car_controller.create_or_update_car(car)
+        return self._unwrap_object(result)
+
+    def get_all_cars(self) -> list[CarView]:
+        result = self.car_controller.get_all_cars()
+        return self._unwrap_object(result)
+
+    def save_or_update_rental(self, rental: CarRentalView) -> CarRentalView:
+        result = self.car_rental_controller.save_or_update_rental(rental)
+        return self._unwrap_object(result)
+
+    def delete_rental_by_id(self, id: int) -> None:
+        result = self.car_rental_controller.remove_rental_by_id(id)
         self._unwrap_object(result)

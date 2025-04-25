@@ -1,4 +1,4 @@
-from menu.MainPage import MainPage
+from menu.page.MainPage import MainPage
 
 
 class MainMenu:

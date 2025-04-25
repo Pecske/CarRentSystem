@@ -1,6 +1,8 @@
 from abc import abstractmethod
-from menu.PageItem import PageItem
+from menu.utils.PageItem import PageItem
 from dto.ViewBase import ViewBase
+import sys
+import os
 
 
 class PageBase(ViewBase):
@@ -10,8 +12,16 @@ class PageBase(ViewBase):
         self.menu_name = menu_name
 
     @abstractmethod
-    def run(self) -> None:
-        raise NotImplementedError
+    def run(self) -> ViewBase:
+        self.clear_console()
+        self._print_header()
+
+    def _print_header(self) -> None:
+        print(self.get_name())
+        dash_line = ""
+        for i in range(len(self.get_name())):
+            dash_line += "-"
+        print(dash_line + "\n")
 
     def get_id(self) -> int:
         return super().get_id()
@@ -28,9 +38,8 @@ class PageBase(ViewBase):
     def print(self) -> None:
         return f"[{self.get_id()}] {self.get_name()}"
 
-    def print_header(self) -> None:
-        print(self.get_name())
-        dash_line = ""
-        for i in range(len(self.get_name())):
-            dash_line += "-"
-        print(dash_line + "\n")
+    def clear_console(self) -> None:
+        if sys.platform == "win32":
+            os.system("cls")
+        else:
+            print("\033[H\033[3J", end="")

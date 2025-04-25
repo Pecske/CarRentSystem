@@ -64,7 +64,7 @@ class CarView(Serializeable):
         self.rental_currency = value
 
     def print(self):
-        return f"[{self.get_id()}] {self.get_category()} {self.get_type()} {self.get_rental_fee()} {self.get_rental_currency()}"
+        return f"[{self.get_id()}] {self.get_category().name} {self.get_licence_plate()} {self.get_type()} {self.get_rental_fee()} {self.get_rental_currency()}"
 
     def serialize(self):
         return {
@@ -92,5 +92,24 @@ class CarView(Serializeable):
         except Exception:
             raise Exception("Deserialization of car failed!")
 
+    def __eq__(self, other):
+        if isinstance(other, CarView):
+            return (
+                other.get_licence_plate() == self.get_licence_plate()
+                and other.get_type() == self.get_type()
+                and other.get_rental_fee() == self.get_rental_fee()
+                and other.get_rental_currency() == self.get_rental_currency()
+            )
+        return False
+
+    def __hash__(self):
+        return (
+            hash(self.get_category())
+            * hash(self.get_licence_plate())
+            * hash(self.get_type())
+            * hash(self.get_rental_fee())
+            * hash(self.get_rental_currency())
+        )
+
     def __str__(self):
-        return f"Category: {self.get_category()} - Licence Plate: {self.get_licence_plate()} - Type: {self.get_type()} - Rental Fee: {self.get_rental_fee()} {self.get_rental_currency()}"
+        return f"Category: {self.get_category().name} - Licence Plate: {self.get_licence_plate()} - Type: {self.get_type()} - Rental Fee: {self.get_rental_fee()} {self.get_rental_currency()}"

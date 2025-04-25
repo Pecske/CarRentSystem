@@ -1,12 +1,12 @@
-from menu.PageBase import PageBase
+from menu.page.PageBase import PageBase
 from datetime import datetime
 from dto.RentView import RentView
 from dto.CarView import CarView
-from menu.Item import Item
-from menu.MenuService import MenuService
+from menu.utils.Item import Item
+from menu.service.MenuService import MenuService
 
 
-class CarRentPage(PageBase):
+class CreateRentPage(PageBase):
 
     def __init__(self, page_id: int, service: MenuService) -> None:
         super().__init__(page_id, "Rent a car")
@@ -39,7 +39,7 @@ class CarRentPage(PageBase):
         return self.service.save_or_update_rent(possible_rent)
 
     def run(self) -> None:
-        self.print_header()
+        super().run()
         try:
             rental_id = self._get_car_rental_id()
             car_id = self._get_car_id(rental_id)

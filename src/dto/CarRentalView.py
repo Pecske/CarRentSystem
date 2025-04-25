@@ -65,3 +65,11 @@ class CarRentalView(Serializeable):
             return CarRentalView(name, de_serialized_cars, id)
         except Exception:
             raise Exception("Deserialization of car rental failed!")
+
+    def __str__(self):
+        result = f"{self.get_id()} {self.get_name()}"
+        if len(self.get_cars()) > 0:
+            for car in self.get_cars():
+                result += "\n" + str(car)
+
+        return result

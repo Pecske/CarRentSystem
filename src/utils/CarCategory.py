@@ -1,6 +1,6 @@
-from enum import StrEnum
+from enum import Enum
 
 
-class CarCategory(StrEnum):
-    Passenger = "passenger"
-    Truck = "truck"
+class CarCategory(Enum):
+    Passenger = 1
+    Truck = 2

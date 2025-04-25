@@ -1,4 +1,4 @@
-from menu.MenuService import MenuService
+from menu.service.MenuService import MenuService
 from controller.CarRentalController import CarRentalController
 from controller.CarController import CarController
 from controller.RentController import RentController

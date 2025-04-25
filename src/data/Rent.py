@@ -1,10 +1,10 @@
 from data.Car import Car
-from datetime import datetime
+from datetime import date
 from data.DataBase import DataBase
 
 
 class Rent(DataBase):
-    def __init__(self, car: Car, rental_time: datetime, id: int | None = None):
+    def __init__(self, car: Car, rental_time: date, id: int | None = None):
         super().__init__(id)
         self.car = car
         self.rental_time = rental_time
@@ -21,8 +21,8 @@ class Rent(DataBase):
     def set_car(self, value: Car) -> None:
         self.car = value
 
-    def get_rental_time(self) -> datetime:
+    def get_rental_time(self) -> date:
         return self.rental_time
 
-    def set_rental_time(self, value: datetime) -> None:
+    def set_rental_time(self, value: date) -> None:
         self.rental_time = value

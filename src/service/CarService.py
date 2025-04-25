@@ -8,7 +8,12 @@ class CarService:
         self.repo = repo
 
     def save_or_update_car(self, car: Car) -> Car:
-        return self.repo.save_or_update(car)
+        found_car = self.repo.get_car_by_licence_plate(car.get_licence_plate())
+        is_new = car.get_id() is None and found_car is None
+        if car.get_id() is not None or is_new:
+            return self.repo.save_or_update(car)
+        else:
+            raise Exception("Car with the given licence plate already exists!")
 
     def get_car_by_id(self, id: int) -> Car:
         found_car = self.repo.get_data_by_id(id)

@@ -1,6 +1,8 @@
 from dto.ViewBase import ViewBase
-from datetime import datetime
-from menu.Item import Item
+from datetime import date
+from menu.utils.Item import Item
+from collections.abc import Callable
+from menu.utils.ValidationResult import ValidationResult
 
 
 class PageItem:
@@ -32,7 +34,7 @@ class PageItem:
 
     def _yes_no_item(self, question: str) -> bool:
         while True:
-            answer = input(question)
+            answer = input(question + " (y/n):")
             if answer.lower() == "y":
                 return True
             elif answer.lower() == "n":
@@ -40,13 +42,13 @@ class PageItem:
             else:
                 print("y or n is allowed!")
 
-    def _date_picker_item(self, question: str) -> datetime:
+    def _date_picker_item(self, question: str) -> date:
         while True:
             try:
                 picked_date = input(f"{question} (yyyy-mm-dd): ")
                 year, month, day = map(int, picked_date.split("-"))
-                rental_date = datetime(year=year, month=month, day=day)
-                if rental_date > datetime.now():
+                rental_date = date(year=year, month=month, day=day)
+                if rental_date > date.today():
                     break
                 else:
                     raise Exception("Date must be in the future!")
@@ -60,10 +62,29 @@ class PageItem:
         for item in source:
             print(item)
 
+    def _text_item(self, question: str) -> str:
+        while True:
+            text = input(question)
+            if len(text) > 0:
+                return text
+            else:
+                print("Text can't be empty!")
+
+    def _int_text_item(self, question: str) -> int:
+        while True:
+            try:
+                text = input(question)
+                if len(text > 0):
+                    return int(text)
+                else:
+                    print("Text can't be empty!")
+            except ValueError:
+                print("Only numbers are allowed!")
+
     def get_selection_result(self, item: Item) -> int:
         return self._selection_item(item.get_question(), item.get_source())
 
-    def get_date_result(self, question: str) -> datetime:
+    def get_date_result(self, question: str) -> date:
         return self._date_picker_item(question)
 
     def get_yes_no_result(self, question: str) -> bool:
@@ -74,3 +95,9 @@ class PageItem:
         while True:
             if self.get_yes_no_result(item.get_question()):
                 break
+
+    def get_text_result(self, item: Item) -> str:
+        return self._text_item(item.get_question())
+
+    def get_int_text_result(self, item: Item) -> int:
+        return self._int_text_item(item.get_question())
