@@ -1,7 +1,6 @@
 from menu.page.PageBase import PageBase
 from menu.service.MenuService import MenuService
 from utils.CarCategory import CarCategory
-from menu.utils.ValidationResult import ValidationResult
 from menu.utils.MenuOption import MenuOption
 from menu.utils.Item import Item
 from dto.CarView import CarView

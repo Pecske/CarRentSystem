@@ -4,7 +4,7 @@ from data.Car import Car
 
 
 class CarRentalService:
-    def __init__(self, repo: CarRentalRepository):
+    def __init__(self, repo: CarRentalRepository) -> None:
         self.repo = repo
 
     def save_or_update_rental(self, rental: CarRental) -> CarRental:

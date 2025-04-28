@@ -11,7 +11,7 @@ class FileService:
         car_controller: CarController,
         rent_controller: RentController,
         file_handler: FileHandler,
-    ):
+    ) -> None:
         self.car_rental_controller = car_rental_controller
         self.car_controller = car_controller
         self.rent_controller = rent_controller

@@ -3,7 +3,7 @@ from dto.ViewBase import ViewBase
 
 
 class Serializeable(ViewBase):
-    def __init__(self, id: int):
+    def __init__(self, id: int) -> None:
         super().__init__(id)
 
     @abstractmethod

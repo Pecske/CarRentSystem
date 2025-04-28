@@ -5,7 +5,7 @@ from datetime import date
 
 
 class RentService:
-    def __init__(self, repo: RentRepository):
+    def __init__(self, repo: RentRepository) -> None:
         self.repo = repo
 
     def save_or_update_rent(self, rent: Rent) -> Rent:

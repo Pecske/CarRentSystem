@@ -15,8 +15,9 @@ from typing import TypeVar
 T = TypeVar("T")
 
 
-class DependencyController:
-    def __init__(self):
+class DependencyController(object):
+
+    def __init__(self) -> None:
         self.dependencies = dict()
         self.class_dict = {
             MenuService: self._get_menu_service,

@@ -4,7 +4,7 @@ from menu.utils.Item import Item
 
 
 class ListRentalPage(PageBase):
-    def __init__(self, page_id: int, service: MenuService):
+    def __init__(self, page_id: int, service: MenuService) -> None:
         super().__init__(page_id, "List Car Rentals")
         self.service = service
 

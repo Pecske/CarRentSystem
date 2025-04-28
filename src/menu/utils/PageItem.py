@@ -1,8 +1,6 @@
 from dto.ViewBase import ViewBase
 from datetime import date
 from menu.utils.Item import Item
-from collections.abc import Callable
-from menu.utils.ValidationResult import ValidationResult
 
 
 class PageItem:
@@ -17,6 +15,7 @@ class PageItem:
             for option in options:
                 valid_ids.append(option.get_id())
                 print(option.print())
+            print("\n")
             while True:
                 try:
                     picked_option = int(input("Id: "))
@@ -61,6 +60,7 @@ class PageItem:
     def _view_only_item(self, source: list[ViewBase]) -> None:
         for item in source:
             print(item)
+        print("\n")
 
     def _text_item(self, question: str) -> str:
         while True:

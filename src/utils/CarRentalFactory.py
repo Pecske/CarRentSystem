@@ -5,7 +5,7 @@ from utils.CarFactory import CarFactory
 
 
 class CarRentalFactory(FactoryBase):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
 
     def from_data_to_view(data: CarRental) -> CarRentalView:

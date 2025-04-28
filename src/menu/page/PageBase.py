@@ -13,15 +13,17 @@ class PageBase(ViewBase):
 
     @abstractmethod
     def run(self) -> ViewBase:
-        self.clear_console()
+        # self.clear_console()
         self._print_header()
 
     def _print_header(self) -> None:
-        print(self.get_name())
+        name_length = len(self.get_name())
+        header = "\n"
         dash_line = ""
-        for i in range(len(self.get_name())):
+        for i in range(name_length):
             dash_line += "-"
-        print(dash_line + "\n")
+        header += dash_line + "\n" + self.get_name() + "\n" + dash_line + "\n"
+        print(header)
 
     def get_id(self) -> int:
         return super().get_id()
