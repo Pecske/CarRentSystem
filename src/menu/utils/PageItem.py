@@ -70,12 +70,16 @@ class PageItem:
             else:
                 print("Text can't be empty!")
 
-    def _int_text_item(self, question: str) -> int:
+    def _positive_int_text_item(self, question: str) -> int:
         while True:
             try:
                 text = input(question)
-                if len(text > 0):
-                    return int(text)
+                if len(text) > 0:
+                    parsed_result = int(text)
+                    if parsed_result > 0:
+                        return int(text)
+                    else:
+                        print("Positive numbers are allowed!")
                 else:
                     print("Text can't be empty!")
             except ValueError:
@@ -100,4 +104,4 @@ class PageItem:
         return self._text_item(item.get_question())
 
     def get_int_text_result(self, item: Item) -> int:
-        return self._int_text_item(item.get_question())
+        return self._positive_int_text_item(item.get_question())

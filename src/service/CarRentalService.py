@@ -46,3 +46,15 @@ class CarRentalService:
             return self.save_or_update_rental(rental)
         except ValueError:
             raise Exception("No car found in the given rental!")
+
+    def is_car_owned_by_foreign_rental(self, rental_id: int, car_id: int) -> bool:
+        found_car = False
+        rentals = self.get_all_rentals()
+        for rental in rentals:
+            if rental_id is None or rental.get_id() != rental_id:
+                for car in rental.get_cars():
+                    if car.get_id() == car_id:
+                        found_car = True
+                        break
+
+        return found_car

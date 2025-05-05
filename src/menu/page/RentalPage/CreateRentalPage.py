@@ -10,7 +10,7 @@ from dto.CarRentalView import CarRentalView
 
 class CreateRentalPage(PageBase):
     def __init__(self, page_id: int, service: MenuService) -> None:
-        super().__init__(page_id, "Rental Creation")
+        super().__init__(page_id, "Create Rental")
         self.service = service
 
     def _get_rental_name(self) -> None:
@@ -25,6 +25,26 @@ class CreateRentalPage(PageBase):
         question = "Which car would u like to add?: "
         source = self.service.get_all_cars()
         return self.get_item().get_selection_result(Item(question, source))
+
+    def _select_cars(self) -> list[int]:
+        results: list[int] = list()
+        question = "Choose a car: "
+        source = self.service.get_all_cars()
+        while True:
+            car_list: list[CarView] = list()
+            for car in source:
+                if car.get_id() not in results:
+                    car_list.append(car)
+            if len(car_list) > 0:
+                item = Item(question, car_list)
+                chosen_id = self.get_item().get_selection_result(item)
+                if chosen_id not in results:
+                    results.append(chosen_id)
+            else:
+                break
+            if not self._add_another_car():
+                break
+        return results
 
     def _get_cars(self) -> list[CarView]:
         cars_to_add: list[CarView] = list()
@@ -43,12 +63,10 @@ class CreateRentalPage(PageBase):
                     break
 
         else:
-            while True:
-                car_id = self._select_car()
-                selected_car = self.service.get_car_by_id(car_id)
-                cars_to_add.append(selected_car)
-                if not self._add_another_car():
-                    break
+            car_ids = self._select_cars()
+            for id in car_ids:
+                found_car = self.service.get_car_by_id(id)
+                cars_to_add.append(found_car)
 
         return cars_to_add
 

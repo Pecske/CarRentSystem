@@ -8,7 +8,7 @@ from dto.CarView import CarView
 
 class CreateCarPage(PageBase):
     def __init__(self, page_id: int, service: MenuService) -> None:
-        super().__init__(page_id, "Car Creation")
+        super().__init__(page_id, "Create Car")
         self.service = service
 
     def _get_car_category(self) -> CarCategory:
@@ -35,7 +35,7 @@ class CreateCarPage(PageBase):
 
     def _get_rental_fee(self) -> int:
         question = "How much is the rental fee?: "
-        return self.get_item().get_int_text_result(Item(question=question))
+        return self.get_item().get_int_text_result(Item(question))
 
     def run(self) -> CarView:
         super().run()

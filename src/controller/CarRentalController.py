@@ -16,14 +16,26 @@ class CarRentalController:
         self.car_service = car_service
         self.car_rental_service = car_rental_serivce
 
-    def _get_cars_to_save(self, cars: list[CarView]) -> list[Car]:
+    def _get_cars_to_save(
+        self,
+        cars: list[CarView],
+        rental_id: int | None,
+        wrapper: Wrapper[CarRentalView],
+    ) -> list[Car]:
         cars_to_save: list[Car] = list()
         if len(cars) > 0:
             for car in cars:
                 car_id = car.get_id()
                 if car_id != None:
                     found_car = self.car_service.get_car_by_id(car_id)
-                    cars_to_save.append(found_car)
+                    if not self.car_rental_service.is_car_owned_by_foreign_rental(
+                        rental_id, found_car.get_id()
+                    ):
+                        cars_to_save.append(found_car)
+                    else:
+                        wrapper.add_error(
+                            f"Car is already owned by another rental!\nLicence Plate:{found_car.get_licence_plate()}"
+                        )
                 else:
                     possible_car = CarFactory.from_view_to_data(car)
                     created_car = self.car_service.save_or_update_car(possible_car)
@@ -33,7 +45,7 @@ class CarRentalController:
     def save_or_update_rental(self, dto: CarRentalView) -> Wrapper[CarRentalView]:
         result = Wrapper[CarRentalView]()
         if dto != None:
-            cars_to_save = self._get_cars_to_save(dto.get_cars())
+            cars_to_save = self._get_cars_to_save(dto.get_cars(), dto.get_id(), result)
             rental = CarRental(name=dto.get_name(), cars=cars_to_save, id=dto.get_id())
             saved_rental = self.car_rental_service.save_or_update_rental(rental)
             result.set_wrapped_obj(CarRentalFactory.from_data_to_view(saved_rental))
