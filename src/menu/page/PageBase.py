@@ -22,7 +22,7 @@ class PageBase(ViewBase):
         dash_line = ""
         for i in range(name_length):
             dash_line += "-"
-        header += dash_line + "\n" + self.get_name() + "\n" + dash_line + "\n"
+        header += dash_line + "\n" + self.get_name() + "\n" + dash_line
         print(header)
 
     def get_id(self) -> int:

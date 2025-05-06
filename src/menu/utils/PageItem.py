@@ -9,13 +9,14 @@ class PageItem:
 
     def _selection_item(self, question: str, options: list[ViewBase]) -> int:
         picked_option: int | None = None
-        print(question + "\n")
+        if len(question) > 0:
+            print("\n" + question + "\n")
         valid_ids: list[int] = list()
         if len(options) > 0:
             for option in options:
                 valid_ids.append(option.get_id())
                 print(option.print())
-            print("\n")
+            # print("\n")
             while True:
                 try:
                     picked_option = int(input("Id: "))
@@ -33,7 +34,7 @@ class PageItem:
 
     def _yes_no_item(self, question: str) -> bool:
         while True:
-            answer = input(question + " (y/n):")
+            answer = input("\n" + question + " (y/n):")
             if answer.lower() == "y":
                 return True
             elif answer.lower() == "n":
@@ -44,7 +45,7 @@ class PageItem:
     def _date_picker_item(self, question: str) -> date:
         while True:
             try:
-                picked_date = input(f"{question} (yyyy-mm-dd): ")
+                picked_date = input(f"\n{question} (yyyy-mm-dd): ")
                 year, month, day = map(int, picked_date.split("-"))
                 rental_date = date(year=year, month=month, day=day)
                 if rental_date > date.today():
@@ -60,7 +61,7 @@ class PageItem:
     def _view_only_item(self, source: list[ViewBase]) -> None:
         for item in source:
             print(item)
-        print("\n")
+        # print("\n")
 
     def _text_item(self, question: str) -> str:
         while True:
@@ -73,7 +74,7 @@ class PageItem:
     def _positive_int_text_item(self, question: str) -> int:
         while True:
             try:
-                text = input(question)
+                text = input("\n" + question)
                 if len(text) > 0:
                     parsed_result = int(text)
                     if parsed_result > 0:
