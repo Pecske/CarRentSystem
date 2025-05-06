@@ -1,0 +1,303 @@
+[
+    {
+        "name": "car_create_menu",
+        "lang": {
+            "hun": "Autó Létrehozás",
+            "eng": "Create Car"
+        }
+    },
+    {
+        "name": "car_create_category",
+        "lang": {
+            "hun": "Válassz kategóriát: ",
+            "eng": "Choose a category: "
+        }
+    },
+    {
+        "name": "car_create_licence_plate",
+        "lang": {
+            "hun": "Add meg a rendszámot: ",
+            "eng": "What is the licence plate?: "
+        }
+    },
+    {
+        "name": "car_create_type",
+        "lang": {
+            "hun": "Add meg a tipusát: ",
+            "eng": "What is the type?: "
+        }
+    },
+    {
+        "name": "car_create_currency",
+        "lang": {
+            "hun": "Mi a kölcsönzési dij pénzneme?: ",
+            "eng": "Which currency is the rental fee in? "
+        }
+    },
+    {
+        "name": "car_create_amount",
+        "lang": {
+            "hun": "Mennyi a kölcsönzési dij?: ",
+            "eng": "How much is the rental fee?: "
+        }
+    },
+    {
+        "name": "rental_create_menu",
+        "lang": {
+            "hun": "Autó Kölcsönző Létrehozás",
+            "eng": "Create Rental"
+        }
+    },
+    {
+        "name": "rental_create_name",
+        "lang": {
+            "hun": "Mi a kölcsönző neve? ",
+            "eng": "What is the name of the rental? "
+        }
+    },
+    {
+        "name": "rental_create_another_car",
+        "lang": {
+            "hun": "Szeretnél még autót hozzáadni?",
+            "eng": "Would you like to add another car?"
+        }
+    },
+    {
+        "name": "rental_create_select_car",
+        "lang": {
+            "hun": "Válassz egy autót: ",
+            "eng": "Choose a car: "
+        }
+    },
+    {
+        "name": "rental_create_new_existing_car",
+        "lang": {
+            "hun": "Szeretnél új autót létrehozni, vagy egy meglévőt hozzáadni?",
+            "eng": "Would you like to create a new car, or add an existing one?"
+        }
+    },
+    {
+        "name": "rental_create_add_car_menu",
+        "lang": {
+            "hun": "Meglévő Autó Hozzáadása",
+            "eng": "Add Existing Car"
+        }
+    },
+    {
+        "name": "rental_delete_menu",
+        "lang": {
+            "hun": "Kölcsönző Törlés",
+            "eng": "Delete Rental"
+        }
+    },
+    {
+        "name": "rental_delete_id",
+        "lang": {
+            "hun": "Melyik kölcsönzőt szeretnéd törölni?: ",
+            "eng": "Which rental would u like to remove?: "
+        }
+    },
+    {
+        "name": "rental_list_menu",
+        "lang": {
+            "hun": "Autó Kölcsönzők Listázása",
+            "eng": "List Car Rentals"
+        }
+    },
+    {
+        "name": "rental_list_back",
+        "lang": {
+            "hun": "Vissza?",
+            "eng": "Go back?"
+        }
+    },
+    {
+        "name": "rental_update_menu",
+        "lang": {
+            "hun": "Autó Hozzáadás vagy Eltávolitása",
+            "eng": "Add or Remove Car"
+        }
+    },
+    {
+        "name": "rental_update_id",
+        "lang": {
+            "hun": "Melyik kölcsönzőt szeretnéd módositani?",
+            "eng": "Which rental would u like to modify?"
+        }
+    },
+    {
+        "name": "rental_update_add_another",
+        "lang": {
+            "hun": "Szeretnél még autót hozzáadni?",
+            "eng": "Would you like to add another car?"
+        }
+    },
+    {
+        "name": "rental_update_remove_another",
+        "lang": {
+            "hun": "Szeretnél még autót hozzáadni?",
+            "eng": "Would you like to remove another car?"
+        }
+    },
+    {
+        "name": "rental_update_select_car",
+        "lang": {
+            "hun": "Válassz autót: ",
+            "eng": "Choose a car: "
+        }
+    },
+    {
+        "name": "rental_update_new_existing_car",
+        "lang": {
+            "hun": "Szeretnél új autót létrehozni, vagy egy meglévőt hozzáadni?",
+            "eng": "Would u like to create a new car, or add an existing one?"
+        }
+    },
+    {
+        "name": "rental_update_add_car_menu",
+        "lang": {
+            "hun": "Meglévő Autó Hozzáadása",
+            "eng": "Add Existing Car"
+        }
+    },
+    {
+        "name": "rental_update_add_remove_car",
+        "lang": {
+            "hun": "Hozzáadni vagy eltávolitani szeretnél egy autót?",
+            "eng": "Would you like to add or remove a car?"
+        }
+    },
+    {
+        "name": "rental_update_add_menu",
+        "lang": {
+            "hun": "Autó Hozzáadása",
+            "eng": "Add Car"
+        }
+    },
+    {
+        "name": "rental_update_remove_menu",
+        "lang": {
+            "hun": "Autó Eltávolitása",
+            "eng": "Remove Car"
+        }
+    },
+    {
+        "name": "rent_create_menu",
+        "lang": {
+            "hun": "Autó Bérlése",
+            "eng": "Rent Car"
+        }
+    },
+    {
+        "name": "rent_create_rental",
+        "lang": {
+            "hun": "Melyik autó kölcsönzőt szeretnéd választani?",
+            "eng": "Which car rental would you like to browse from?"
+        }
+    },
+    {
+        "name": "rent_create_car",
+        "lang": {
+            "hun": "Melyik autót szeretnéd kibérelni?",
+            "eng": "Which car would you like to rent?"
+        }
+    },
+    {
+        "name": "rent_create_date",
+        "lang": {
+            "hun": "Melyik napra szeretnéd kibérelni?",
+            "eng": "When would u like to rent the chosen car?:"
+        }
+    },
+    {
+        "name": "rent_error_reserved",
+        "lang": {
+            "hun": "Az adott dátumra már foglalt a kiválasztott autó",
+            "eng": "Car is already reserved for the given date!"
+        }
+    },
+    {
+        "name": "exit_menu",
+        "lang": {
+            "hun": "Kilépés",
+            "eng": "Exit program"
+        }
+    },
+    {
+        "name": "exit_sure_exit",
+        "lang": {
+            "hun": "Biztosan ki akarsz lépni?",
+            "eng": "Are you sure you want to quit?"
+        }
+    },
+	{
+        "name": "back_menu",
+        "lang": {
+            "hun": "Vissza",
+            "eng": "Back"
+        }
+    },
+	{
+        "name": "rent_list_menu",
+        "lang": {
+            "hun": "Bérlések Listázása",
+            "eng": "List Rents"
+        }
+    },
+	{
+        "name": "rent_list_back",
+        "lang": {
+            "hun": "Vissza?",
+            "eng": "Go back?"
+        }
+    },
+	{
+        "name": "rent_delete_menu",
+        "lang": {
+            "hun": "Bérlés Lemondása",
+            "eng": "Delete Rent"
+        }
+    },
+	{
+        "name": "rent_delete_id",
+        "lang": {
+            "hun": "Melyik bérlést szeretnéd lemondani?",
+            "eng": "Which rent would you like to remove?"
+        }
+    },
+	{
+        "name": "main_menu",
+        "lang": {
+            "hun": "Fő Menü",
+            "eng": "Main Menu"
+        }
+    },
+	{
+        "name": "manage_rent_menu",
+        "lang": {
+            "hun": "Bérlések kezelése",
+            "eng": "Manage Rent"
+        }
+    },
+	{
+        "name": "manage_rental_menu",
+        "lang": {
+            "hun": "Kölcsönző kezelése",
+            "eng": "Manage Rental"
+        }
+    },
+	{
+        "name": "choose_language_menu",
+        "lang": {
+            "hun": "Nyelv választása",
+            "eng": "Choose Language"
+        }
+    },
+	{
+        "name": "language_select",
+        "lang": {
+            "hun": "Vállassz egy nyelvet:",
+            "eng": "Please select a language:"
+        }
+    }
+]

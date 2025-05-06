@@ -2,6 +2,8 @@ from controller.CarRentalController import CarRentalController
 from controller.CarController import CarController
 from controller.RentController import RentController
 from utils.FileHandler import FileHandler
+from utils.TextCache import TextCache
+from utils.TextType import TextType
 
 
 class FileService:
@@ -11,11 +13,13 @@ class FileService:
         car_controller: CarController,
         rent_controller: RentController,
         file_handler: FileHandler,
+        text_cache: TextCache,
     ) -> None:
         self.car_rental_controller = car_rental_controller
         self.car_controller = car_controller
         self.rent_controller = rent_controller
         self.handler = file_handler
+        self.text_cache = text_cache
 
     def _join_errors(self, errors: list[str]) -> str:
         errors_joined = ""
@@ -42,3 +46,10 @@ class FileService:
                 errors = self._join_errors(saved.get_errors())
         if errors != "":
             raise Exception(errors)
+
+    def save_texts(self, path: str) -> None:
+        imported_texts = self.handler.read_text(path)
+        for text in imported_texts:
+            for type in TextType:
+                if type.name.lower() == text.get_name():
+                    self.text_cache.add_to_texts(type, text)

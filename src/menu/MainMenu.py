@@ -1,12 +1,14 @@
 from utils.FileService import FileService
 from utils.DependencyController import DependencyController
 from menu.MenuFactory import MenuFactory
+import sys
 
 
 class MainMenu:
 
     CAR_RENTAL_PATH = "resources/carrental.json"
     RENTAL_PATH = "resources/rents.json"
+    LANGUAGE_PATH = "resources/texts.json"
 
     def __init__(self) -> None:
         self.container = DependencyController()
@@ -18,11 +20,18 @@ class MainMenu:
         try:
             file_service.save_car_rental(self.CAR_RENTAL_PATH)
             file_service.save_rents(self.RENTAL_PATH)
+            file_service.save_texts(self.LANGUAGE_PATH)
+
         except Exception as e:
             print(str(e))
 
     def run(self) -> None:
-        main_menu = self.factory.create_main()
+        try:
+            main_menu = self.factory.create_main()
 
-        while True:
-            main_menu.run()
+            while True:
+                main_menu.run()
+        except Exception as e:
+            print(e)
+        finally:
+            sys.exit()

@@ -10,6 +10,8 @@ from menu.page.RentalPage.UpdateRentalPage import UpdateRentalPage
 from menu.page.RentalPage.DeleteRentalPage import DeleteRentalPage
 from menu.page.RentalPage.ListRentalPage import ListRentalPage
 from menu.page.PreviousPage import PreviousPage
+from menu.page.LanguagePage import LanguagePage
+from utils.TextType import TextType
 
 
 class MenuFactory:
@@ -17,9 +19,9 @@ class MenuFactory:
         self.container = container
 
     def create_main(self) -> NavigationMenu:
-        main_menu = NavigationMenu(0, "Main Menu")
-        rent_menu = self.create_rent(1, "Manage Rent")
-        rental_menu = self.create_rental(2, "Manage Rental")
+        main_menu = NavigationMenu(0, TextType.Main_Menu)
+        rent_menu = self.create_rent(1, TextType.Manage_Rent_Menu)
+        rental_menu = self.create_rental(2, TextType.Manage_Rental_Menu)
 
         rent_page_length = len(rent_menu.get_pages())
         rental_page_length = len(rental_menu.get_pages())
@@ -29,7 +31,8 @@ class MenuFactory:
 
         main_menu.add_page(rent_menu)
         main_menu.add_page(rental_menu)
-        main_menu.add_page(ExitPage(3))
+        main_menu.add_page(LanguagePage(3))
+        main_menu.add_page(ExitPage(4))
         return main_menu
 
     def create_rental(self, page_id: int, menu_name: str) -> NavigationMenu:

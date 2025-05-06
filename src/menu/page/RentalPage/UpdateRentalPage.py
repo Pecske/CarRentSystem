@@ -6,38 +6,41 @@ from menu.utils.Item import Item
 from menu.utils.MenuOption import MenuOption
 from dto.ViewBase import ViewBase
 from dto.CarView import CarView
+from utils.TextType import TextType
 
 
 class UpdateRentalPage(PageBase):
     def __init__(self, page_id: int, service: MenuService) -> None:
-        super().__init__(page_id, "Add or Remove Car")
+        super().__init__(page_id, TextType.Rental_Update_Menu)
         self.service = service
 
     def _get_rental_id(self) -> list[CarRentalView]:
-        question = "Which rental would u like to modify?"
+        question = self.get_text_from_cache(TextType.Rental_Update_Id)
         source = self.service.get_all_rentals()
         return self.get_item().get_selection_result(Item(question, source))
 
     def _add_another_car(self) -> bool:
-        question = "Would u like to add another car?"
+        question = self.get_text_from_cache(TextType.Rental_Update_Add_Another)
         return self.get_item().get_yes_no_result(question)
 
     def _remove_another_car(self) -> bool:
-        question = "Would u like to add another car?"
+        question = self.get_text_from_cache(TextType.Rental_Update_Remove_Another)
         return self.get_item().get_yes_no_result(question)
 
     def _select_car(self) -> int:
-        question = "Choose a car: "
+        question = self.get_text_from_cache(TextType.Rental_Update_Select_Car)
         source = self.service.get_all_cars()
         return self.get_item().get_selection_result(Item(question, source))
 
     def _get_cars_to_add(self) -> list[CarView]:
         cars: list[CarView] = list()
-        question = "Would u like to create a new car, or add an existing one?"
+        question = self.get_text_from_cache(TextType.Rental_Update_New_Existing_Car)
         car_creation_page = CreateCarPage(1, self.service)
         source: list[ViewBase] = (
             car_creation_page,
-            MenuOption(2, "Add existing car"),
+            MenuOption(
+                2, self.get_text_from_cache(TextType.Rental_Update_Add_Car_Menu)
+            ),
         )
         selected_option = self.get_item().get_selection_result(Item(question, source))
         if selected_option == 1:
@@ -68,10 +71,10 @@ class UpdateRentalPage(PageBase):
     def _add_or_remove_car(self) -> CarRentalView:
         rental_id = self._get_rental_id()
         rental = self.service.get_car_rental_by_id(rental_id)
-        question = "Would u like to add or remove a car?"
+        question = self.get_text_from_cache(TextType.Rental_Update_Add_Remove_Car)
         source: list[ViewBase] = (
-            MenuOption(1, "Add a car"),
-            MenuOption(2, "Remove a car"),
+            MenuOption(1, self.get_text_from_cache(TextType.Rental_Update_Add_Menu)),
+            MenuOption(2, self.get_text_from_cache(TextType.Rental_Update_Remove_Menu)),
         )
         selected_option = self.get_item().get_selection_result(Item(question, source))
         if selected_option == 1:

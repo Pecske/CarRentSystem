@@ -1,6 +1,7 @@
 import json
 from dto.CarRentalView import CarRentalView
 from dto.RentView import RentView
+from utils.Text import Text
 
 
 class FileHandler:
@@ -32,3 +33,14 @@ class FileHandler:
             raise Exception("Invalid rent json format!")
 
         return result
+
+    def read_text(self, path: str) -> list[Text]:
+        texts = self._read_file(path)
+        results: list[Text] = list()
+        if len(texts) > 0:
+            for text in texts:
+                results.append(Text.de_serialize(text))
+        else:
+            raise Exception("Invalid text json format!")
+
+        return results

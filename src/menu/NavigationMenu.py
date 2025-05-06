@@ -1,10 +1,11 @@
 from menu.page.PageBase import PageBase
 from menu.utils.Item import Item
+from utils.TextType import TextType
 
 
 class NavigationMenu(PageBase):
     def __init__(
-        self, page_id: int, menu_name: str, pages: list[PageBase] = None
+        self, page_id: int, menu_name: TextType, pages: list[PageBase] = None
     ) -> None:
         super().__init__(page_id, menu_name)
         self.pages = pages if pages is not None else list()

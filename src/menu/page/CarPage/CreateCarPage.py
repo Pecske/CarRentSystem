@@ -4,15 +4,16 @@ from utils.CarCategory import CarCategory
 from menu.utils.MenuOption import MenuOption
 from menu.utils.Item import Item
 from dto.CarView import CarView
+from utils.TextType import TextType
 
 
 class CreateCarPage(PageBase):
     def __init__(self, page_id: int, service: MenuService) -> None:
-        super().__init__(page_id, "Create Car")
+        super().__init__(page_id, TextType.Car_Create_Menu)
         self.service = service
 
     def _get_car_category(self) -> CarCategory:
-        question = "Choose a category: "
+        question = self.get_text_from_cache(TextType.Car_Create_Category)
         source: list[MenuOption] = list()
         for category in CarCategory:
             option = MenuOption(category.value, category.name)
@@ -22,19 +23,19 @@ class CreateCarPage(PageBase):
         return CarCategory(selected_category)
 
     def _get_licence_plate(self) -> str:
-        question = "What is the licence plate?: "
+        question = self.get_text_from_cache(TextType.Car_Create_Licence_Plate)
         return self.get_item().get_text_result(Item(question))
 
     def _get_type(self) -> str:
-        question = "What is the type?: "
+        question = self.get_text_from_cache(TextType.Car_Create_Type)
         return self.get_item().get_text_result(Item(question))
 
     def _get_rental_currency(self) -> str:
-        question = "Which currency is the rental fee in? "
+        question = self.get_text_from_cache(TextType.Car_Create_Currency)
         return self.get_item().get_text_result(Item(question))
 
     def _get_rental_fee(self) -> int:
-        question = "How much is the rental fee?: "
+        question = self.get_text_from_cache(TextType.Car_Create_Amount)
         return self.get_item().get_int_text_result(Item(question))
 
     def run(self) -> CarView:

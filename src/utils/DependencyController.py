@@ -10,6 +10,7 @@ from repository.CarRepository import CarRepository
 from repository.RentRepository import RentRepository
 from utils.FileService import FileService
 from utils.FileHandler import FileHandler
+from utils.TextCache import TextCache
 from typing import TypeVar
 
 T = TypeVar("T")
@@ -32,6 +33,7 @@ class DependencyController(object):
             RentRepository: self._get_rent_repo,
             CarRentalRepository: self._get_car_rental_repo,
             FileHandler: self._get_file_handler,
+            TextCache: self._get_text_cache,
         }
 
     def get_class(self, dependency: type[T]) -> T:
@@ -99,8 +101,15 @@ class DependencyController(object):
                 self._get_car_controller(),
                 self._get_rent_controller(),
                 self._get_file_handler(),
+                self._get_text_cache(),
             )
         return self.dependencies.get(service_type)
+
+    def _get_text_cache(self) -> TextCache:
+        cache_type = TextCache
+        if cache_type not in self.dependencies:
+            self.dependencies[cache_type] = TextCache.get_instance()
+        return self.dependencies.get(cache_type)
 
     def _get_car_repo(self) -> CarRepository:
         repo_type = CarRepository

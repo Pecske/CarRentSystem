@@ -6,29 +6,30 @@ from menu.utils.MenuOption import MenuOption
 from menu.utils.Item import Item
 from menu.service.MenuService import MenuService
 from dto.CarRentalView import CarRentalView
+from utils.TextType import TextType
 
 
 class CreateRentalPage(PageBase):
     def __init__(self, page_id: int, service: MenuService) -> None:
-        super().__init__(page_id, "Create Rental")
+        super().__init__(page_id, TextType.Rental_Create_Menu)
         self.service = service
 
     def _get_rental_name(self) -> None:
-        question = "What is the name of the rental? "
+        question = self.get_text_from_cache(TextType.Rental_Create_Name)
         return self.get_item().get_text_result(Item(question))
 
     def _add_another_car(self) -> bool:
-        question = "Would u like to add another car?"
+        question = self.get_text_from_cache(TextType.Rental_Create_Another_Car)
         return self.get_item().get_yes_no_result(question)
 
     def _select_car(self) -> int:
-        question = "Which car would u like to add?: "
+        question = self.get_text_from_cache(TextType.Rental_Create_Select_car)
         source = self.service.get_all_cars()
         return self.get_item().get_selection_result(Item(question, source))
 
     def _select_cars(self) -> list[int]:
         results: list[int] = list()
-        question = "Choose a car: "
+        question = self.get_text_from_cache(TextType.Rental_Create_Select_car)
         source = self.service.get_all_cars()
         while True:
             car_list: list[CarView] = list()
@@ -48,11 +49,13 @@ class CreateRentalPage(PageBase):
 
     def _get_cars(self) -> list[CarView]:
         cars_to_add: list[CarView] = list()
-        question = "Would u like to create a new car, or add an existing one?"
+        question = self.get_text_from_cache(TextType.Rental_Create_New_Existing_Car)
         car_creation_page = CreateCarPage(1, self.service)
         source: list[ViewBase] = (
             car_creation_page,
-            MenuOption(2, "Add existing car"),
+            MenuOption(
+                2, self.get_text_from_cache(TextType.Rental_Create_Add_Car_Menu)
+            ),
         )
         selected_option = self.get_item().get_selection_result(Item(question, source))
         if selected_option == 1:
