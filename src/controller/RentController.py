@@ -19,7 +19,7 @@ class RentController:
         if not self.rent_service.is_car_reserved(found_car, rental_time):
             new_rent = Rent(car=found_car, rental_time=rental_time, id=dto.get_id())
             saved_rent = self.rent_service.save_or_update_rent(new_rent)
-            result = RentFactory.from_data_to_view(saved_rent)
+            result = RentFactory.map_data_to_view(saved_rent)
         return result
 
     def save_or_update_rent(self, dto: RentView) -> Wrapper[RentView]:
@@ -45,7 +45,7 @@ class RentController:
         result = Wrapper[RentView]()
         try:
             found_rent = self.rent_service.get_rent_by_id(id)
-            result.set_wrapped_obj(RentFactory.from_data_to_view(found_rent))
+            result.set_wrapped_obj(RentFactory.map_data_to_view(found_rent))
         except Exception as e:
             result.add_error(str(e))
 
@@ -56,7 +56,7 @@ class RentController:
         rents = self.rent_service.get_all_rents()
         views: list[RentView] = list()
         for rent in rents:
-            view = RentFactory.from_data_to_view(rent)
+            view = RentFactory.map_data_to_view(rent)
             views.append(view)
 
         result.set_wrapped_obj(views)

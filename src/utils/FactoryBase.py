@@ -11,9 +11,9 @@ class FactoryBase(ABC):
         super().__init__()
 
     @abstractmethod
-    def from_data_to_view(data: T) -> U:
+    def map_data_to_view(data: T) -> U:
         raise NotImplementedError
 
     @abstractmethod
-    def from_view_to_data(view: U) -> T:
+    def map_view_to_data(view: U) -> T:
         raise NotImplementedError

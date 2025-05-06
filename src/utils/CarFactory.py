@@ -12,7 +12,7 @@ class CarFactory(FactoryBase):
     def __init__(self) -> None:
         super().__init__()
 
-    def from_data_to_view(data: Car) -> CarView:
+    def map_data_to_view(data: Car) -> CarView:
         category: CarCategory | None = None
         if isinstance(data, PassengerCar):
             category = CarCategory.Passenger
@@ -28,7 +28,7 @@ class CarFactory(FactoryBase):
             data.get_id(),
         )
 
-    def from_view_to_data(view: CarView) -> Car:
+    def map_view_to_data(view: CarView) -> Car:
         category = view.get_category()
         rental_money = Money(view.get_rental_fee(), view.get_rental_currency())
         if category == CarCategory.Passenger:

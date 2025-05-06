@@ -16,9 +16,9 @@ class CarController:
             and dto.get_type() is not None
             and dto.get_rental_fee() is not None
         ):
-            possible_car = CarFactory.from_view_to_data(dto)
+            possible_car = CarFactory.map_view_to_data(dto)
             saved_car = self.service.save_or_update_car(possible_car)
-            car_view = CarFactory.from_data_to_view(saved_car)
+            car_view = CarFactory.map_data_to_view(saved_car)
             result.set_wrapped_obj(car_view)
         if dto.get_category() is None:
             result.add_error("Category is missing!")
@@ -34,7 +34,7 @@ class CarController:
         wrapper = Wrapper[CarView]()
         try:
             car = self.service.get_car_by_id(id)
-            car_view = CarFactory.from_data_to_view(car)
+            car_view = CarFactory.map_data_to_view(car)
             wrapper.set_wrapped_obj(car_view)
         except Exception as e:
             wrapper.add_error(str(e))
@@ -46,7 +46,7 @@ class CarController:
         result = Wrapper[list[CarView]]()
         views: list[CarView] = list()
         for car in cars:
-            view = CarFactory.from_data_to_view(car)
+            view = CarFactory.map_data_to_view(car)
             views.append(view)
         result.set_wrapped_obj(views)
 

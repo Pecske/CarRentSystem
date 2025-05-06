@@ -37,7 +37,7 @@ class CarRentalController:
                             f"Car is already owned by another rental!\nLicence Plate:{found_car.get_licence_plate()}"
                         )
                 else:
-                    possible_car = CarFactory.from_view_to_data(car)
+                    possible_car = CarFactory.map_view_to_data(car)
                     created_car = self.car_service.save_or_update_car(possible_car)
                     cars_to_save.append(created_car)
         return cars_to_save
@@ -48,7 +48,7 @@ class CarRentalController:
             cars_to_save = self._get_cars_to_save(dto.get_cars(), dto.get_id(), result)
             rental = CarRental(name=dto.get_name(), cars=cars_to_save, id=dto.get_id())
             saved_rental = self.car_rental_service.save_or_update_rental(rental)
-            result.set_wrapped_obj(CarRentalFactory.from_data_to_view(saved_rental))
+            result.set_wrapped_obj(CarRentalFactory.map_data_to_view(saved_rental))
         else:
             result.add_error("Car Rental data must be given!")
 
@@ -58,7 +58,7 @@ class CarRentalController:
         wrapper = Wrapper[CarRentalView]()
         try:
             found_rental = self.car_rental_service.get_rental_by_id(id)
-            wrapper.set_wrapped_obj(CarRentalFactory.from_data_to_view(found_rental))
+            wrapper.set_wrapped_obj(CarRentalFactory.map_data_to_view(found_rental))
         except Exception as e:
             wrapper.add_error(str(e))
 
@@ -69,7 +69,7 @@ class CarRentalController:
         result = Wrapper[list[CarRentalView]]()
         views: list[CarRentalView] = list()
         for rental in rentals:
-            view = CarRentalFactory.from_data_to_view(rental)
+            view = CarRentalFactory.map_data_to_view(rental)
             views.append(view)
         result.set_wrapped_obj(views)
 
@@ -96,7 +96,7 @@ class CarRentalController:
                     rental = self.car_rental_service.add_car_to_rental(
                         rental_id, found_car
                     )
-                    result.set_wrapped_obj(CarRentalFactory.from_data_to_view(rental))
+                    result.set_wrapped_obj(CarRentalFactory.map_data_to_view(rental))
                 except Exception as e:
                     result.add_error(str(e))
             else:
@@ -117,7 +117,7 @@ class CarRentalController:
                     rental = self.car_rental_service.remove_car_from_rental(
                         rental_id, found_car
                     )
-                    result.set_wrapped_obj(CarRentalFactory.from_data_to_view(rental))
+                    result.set_wrapped_obj(CarRentalFactory.map_data_to_view(rental))
                 except Exception as e:
                     result.add_error(str(e))
             else:
