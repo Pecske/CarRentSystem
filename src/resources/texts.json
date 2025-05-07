@@ -231,6 +231,13 @@
         }
     },
 	{
+        "name": "exit_save",
+        "lang": {
+            "hun": "Szeretnéd a módositásokat elmenteni?",
+            "eng": "Would you like to save your changes?"
+        }
+    },
+	{
         "name": "back_menu",
         "lang": {
             "hun": "Vissza",

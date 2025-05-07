@@ -6,10 +6,6 @@ from utils.DependencyController import DependencyController
 
 class FileService:
 
-    CAR_RENTAL_PATH = "resources/carrental.json"
-    RENTS_PATH = "resources/rents.json"
-    LANGUAGE_PATH = "resources/texts.json"
-
     _instance = None
 
     def __init__(self) -> None:

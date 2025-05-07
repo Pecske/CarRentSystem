@@ -78,3 +78,8 @@ class MenuService:
     def delete_rental_by_id(self, id: int) -> None:
         result = self.car_rental_controller.remove_data_by_id(id)
         self._unwrap_object(result)
+
+    def get_cars_by_rental(self, rental_id: int) -> list[CarView]:
+        result = self.car_rental_controller.get_data_by_id(rental_id)
+        rental = self._unwrap_object(result)
+        return rental.get_cars()

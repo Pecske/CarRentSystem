@@ -32,6 +32,11 @@ class UpdateRentalPage(PageBase):
         source = self.service.get_all_cars()
         return self.get_item().get_selection_result(Item(question, source))
 
+    def _remove_select_car(self, rental_id: int) -> int:
+        question = self.get_text_from_cache(TextType.Rental_Update_Select_Car)
+        source = self.service.get_cars_by_rental(rental_id)
+        return self.get_item().get_selection_result(Item(question, source))
+
     def _get_cars_to_add(self) -> list[CarView]:
         cars: list[CarView] = list()
         question = self.get_text_from_cache(TextType.Rental_Update_New_Existing_Car)
@@ -59,11 +64,12 @@ class UpdateRentalPage(PageBase):
 
         return cars
 
-    def _get_cars_to_remove(self) -> CarRentalView:
+    def _get_cars_to_remove(self, rental_id: int) -> CarRentalView:
         cars_to_remove: list[CarView] = list()
         while True:
-            selected_car = self._select_car()
-            cars_to_remove.append(selected_car)
+            selected_car_id = self._remove_select_car(rental_id)
+            found_car = self.service.get_car_by_id(selected_car_id)
+            cars_to_remove.append(found_car)
             if not self._remove_another_car():
                 break
         return cars_to_remove
@@ -82,7 +88,7 @@ class UpdateRentalPage(PageBase):
             for car in cars:
                 rental.add_car(car)
         else:
-            cars = self._get_cars_to_remove()
+            cars = self._get_cars_to_remove(rental_id)
             for car in cars:
                 rental.remove_car(car)
         return self.service.save_or_update_rental(rental)

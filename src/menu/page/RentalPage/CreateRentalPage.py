@@ -22,11 +22,6 @@ class CreateRentalPage(PageBase):
         question = self.get_text_from_cache(TextType.Rental_Create_Another_Car)
         return self.get_item().get_yes_no_result(question)
 
-    def _select_car(self) -> int:
-        question = self.get_text_from_cache(TextType.Rental_Create_Select_car)
-        source = self.service.get_all_cars()
-        return self.get_item().get_selection_result(Item(question, source))
-
     def _select_cars(self) -> list[int]:
         results: list[int] = list()
         question = self.get_text_from_cache(TextType.Rental_Create_Select_car)
