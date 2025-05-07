@@ -6,23 +6,27 @@
                 "category": "Passenger",
                 "licence_plate": "abc-123",
                 "type": "Sport",
-                "rental_fee": 100000,
-                "rental_currency": "HUF"
+                "rental_fee": "100000",
+                "rental_currency": "HUF",
+                "id": "1"
             },
             {
                 "category": "Truck",
                 "licence_plate": "cba-321",
                 "type": "Garbage",
-                "rental_fee": 200000,
-                "rental_currency": "HUF"
+                "rental_fee": "200000",
+                "rental_currency": "HUF",
+                "id": "2"
             },
             {
                 "category": "Passenger",
                 "licence_plate": "bac-213",
                 "type": "Convertible",
-                "rental_fee": 300000,
-                "rental_currency": "HUF"
+                "rental_fee": "300000",
+                "rental_currency": "HUF",
+                "id": "3"
             }
-        ]
+        ],
+        "id": "1"
     }
 ]

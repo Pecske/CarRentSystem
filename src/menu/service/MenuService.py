@@ -36,15 +36,15 @@ class MenuService:
             raise Exception(self._join_errors(errors))
 
     def get_all_rentals(self) -> list[CarRentalView]:
-        result = self.car_rental_controller.get_all_rentals()
+        result = self.car_rental_controller.get_all_data()
         return self._unwrap_object(result)
 
     def get_car_rental_by_id(self, id: int) -> CarRentalView:
-        result = self.car_rental_controller.get_rental_by_id(id)
+        result = self.car_rental_controller.get_data_by_id(id)
         return self._unwrap_object(result)
 
     def get_car_by_id(self, id: int) -> CarView:
-        result = self.car_controller.get_car_by_id(id)
+        result = self.car_controller.get_data_by_id(id)
         return self._unwrap_object(result)
 
     def is_car_reserved(self, rent: RentView) -> bool:
@@ -52,29 +52,29 @@ class MenuService:
         return self._unwrap_object(result)
 
     def save_or_update_rent(self, rent: RentView) -> RentView:
-        result = self.rent_controller.save_or_update_rent(rent)
+        result = self.rent_controller.save_or_update(rent)
         return self._unwrap_object(result)
 
     def get_all_rents(self) -> list[RentView]:
-        result = self.rent_controller.get_all_rents()
+        result = self.rent_controller.get_all_data()
         return self._unwrap_object(result)
 
     def delete_rent_by_id(self, id: int) -> None:
-        result = self.rent_controller.remove_rent_by_id(id)
+        result = self.rent_controller.remove_data_by_id(id)
         self._unwrap_object(result)
 
     def save_or_update_car(self, car: CarView) -> CarView:
-        result = self.car_controller.create_or_update_car(car)
+        result = self.car_controller.save_or_update(car)
         return self._unwrap_object(result)
 
     def get_all_cars(self) -> list[CarView]:
-        result = self.car_controller.get_all_cars()
+        result = self.car_controller.get_all_data()
         return self._unwrap_object(result)
 
     def save_or_update_rental(self, rental: CarRentalView) -> CarRentalView:
-        result = self.car_rental_controller.save_or_update_rental(rental)
+        result = self.car_rental_controller.save_or_update(rental)
         return self._unwrap_object(result)
 
     def delete_rental_by_id(self, id: int) -> None:
-        result = self.car_rental_controller.remove_rental_by_id(id)
+        result = self.car_rental_controller.remove_data_by_id(id)
         self._unwrap_object(result)

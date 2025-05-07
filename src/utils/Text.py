@@ -1,15 +1,18 @@
 from utils.LanguageType import LanguageType
 from utils.Serializeable import Serializeable
+from utils.TextType import TextType
 
 NAME = "name"
 LANG = "lang"
-HUN = "hun"
-ENG = "eng"
 
 
 class Text(Serializeable):
-    def __init__(self, name: str, texts: dict[LanguageType, str] = None):
-        self.name = name
+    def __init__(self, name: str, texts: dict[LanguageType, str] = None):   
+        for type in TextType:
+            if type.name.lower() == name.lower():   
+                id = type.value
+                self.name = type
+        super().__init__(id)
         self.texts = texts if texts is not None else dict()
 
     def get_text_by_lang(self, lang: LanguageType) -> str:
@@ -24,10 +27,10 @@ class Text(Serializeable):
     def set_id(self, value):
         return super().set_id(value)
 
-    def get_name(self) -> str:
+    def get_name(self) -> TextType:
         return self.name
 
-    def set_name(self, value: str) -> None:
+    def set_name(self, value: TextType) -> None:
         self.name = value
 
     def serialize(self):
@@ -35,7 +38,7 @@ class Text(Serializeable):
         for k, v in self.texts.items():
             langs[k.name.lower()] = v
 
-        return {NAME: self.get_name(), LANG: langs}
+        return {NAME: self.get_name().name, LANG: langs}
 
     def de_serialize(dct: dict[str, str]):
         try:
@@ -56,4 +59,4 @@ class Text(Serializeable):
         lang = ""
         for k, v in self.texts.items():
             lang += f"{k}:{v}\n"
-        return f"{self.get_name()}" + lang
+        return f"{self.get_name().name}" + lang

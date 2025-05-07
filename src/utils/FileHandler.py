@@ -1,46 +1,33 @@
 import json
-from dto.CarRentalView import CarRentalView
-from dto.RentView import RentView
-from utils.Text import Text
+from utils.Serializeable import Serializeable
+from dto.ViewBase import ViewBase
 
 
 class FileHandler:
     def __init__(self) -> None:
         pass
 
-    def _read_file(self, path: str):
+    def _read_file(self, path: str) -> dict[str, str]:
         with open(path, encoding="utf-8") as f:
             read = json.load(f)
         return read
 
-    def read_car_rentals(self, path: str) -> list[CarRentalView]:
-        car_rentals = self._read_file(path)
-        result: list[CarRentalView] = list()
-        if len(car_rentals) > 0:
-            for car_rental in car_rentals:
-                result.append(CarRentalView.de_serialize(car_rental))
+    def _write_file(self, dicts: list[dict[str, str]], destination: str) -> None:
+        with open(destination, "w", encoding="utf-8") as f:
+            json.dump(dicts, f, ensure_ascii=False, indent=4)
+
+    def read(self, serializeable: type[Serializeable], path: str) -> list[ViewBase]:
+        datas = self._read_file(path)
+        results: list[ViewBase] = list()
+        if len(datas) > 0:
+            for data in datas:
+                results.append(serializeable.de_serialize(data))
         else:
-            raise Exception("Invalid car rental json format!")
-        return result
-
-    def read_rents(self, path: str) -> list[RentView]:
-        rents = self._read_file(path)
-        result: list[RentView] = list()
-        if len(rents) > 0:
-            for rent in rents:
-                result.append(RentView.de_serialize(rent))
-        else:
-            raise Exception("Invalid rent json format!")
-
-        return result
-
-    def read_text(self, path: str) -> list[Text]:
-        texts = self._read_file(path)
-        results: list[Text] = list()
-        if len(texts) > 0:
-            for text in texts:
-                results.append(Text.de_serialize(text))
-        else:
-            raise Exception("Invalid text json format!")
-
+            raise Exception(f"Invalid {serializeable} json format!")
         return results
+
+    def write(self, serializeables: list[Serializeable], destination: str) -> None:
+        result: list[dict[str, str]] = list()
+        for serializeable in serializeables:
+            result.append(serializeable.serialize())
+        self._write_file(result, destination)

@@ -2,13 +2,15 @@ from service.CarService import CarService
 from utils.Wrapper import Wrapper
 from utils.CarFactory import CarFactory
 from dto.CarView import CarView
+from controller.ControllerBase import ControllerBase
 
 
-class CarController:
+class CarController(ControllerBase):
     def __init__(self, service: CarService) -> None:
+        super().__init__()
         self.service = service
 
-    def create_or_update_car(self, dto: CarView) -> Wrapper[CarView]:
+    def save_or_update(self, dto: CarView) -> Wrapper[CarView]:
         result = Wrapper[CarView]()
         if (
             dto.get_category() is not None
@@ -30,7 +32,7 @@ class CarController:
             result.add_error("Rental fee is missing!")
         return result
 
-    def get_car_by_id(self, id: int) -> Wrapper[CarView]:
+    def get_data_by_id(self, id: int) -> Wrapper[CarView]:
         wrapper = Wrapper[CarView]()
         try:
             car = self.service.get_car_by_id(id)
@@ -41,7 +43,7 @@ class CarController:
 
         return wrapper
 
-    def get_all_cars(self) -> Wrapper[list[CarView]]:
+    def get_all_data(self) -> Wrapper[list[CarView]]:
         cars = self.service.get_all_cars()
         result = Wrapper[list[CarView]]()
         views: list[CarView] = list()
@@ -52,7 +54,7 @@ class CarController:
 
         return result
 
-    def remove_car_by_id(self, id: int) -> Wrapper[CarView]:
+    def remove_data_by_id(self, id: int) -> Wrapper[CarView]:
         wrapper = Wrapper[CarView]()
         try:
             self.service.remove_car_by_id(id)

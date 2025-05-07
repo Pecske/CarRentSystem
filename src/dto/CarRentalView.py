@@ -47,7 +47,7 @@ class CarRentalView(Serializeable):
 
     def serialize(self):
         serialized_cars: list[dict[str, str]] = list()
-        if len(self.get_cars) > 0:
+        if len(self.get_cars()) > 0:
             for car in self.get_cars():
                 serialized_cars.append(car.serialize())
 

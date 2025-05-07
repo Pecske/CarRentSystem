@@ -15,8 +15,8 @@ from utils.TextType import TextType
 
 
 class MenuFactory:
-    def __init__(self, container: DependencyController) -> None:
-        self.container = container
+    def __init__(self) -> None:
+        self.container = DependencyController.get_instance()
 
     def create_main(self) -> NavigationMenu:
         main_menu = NavigationMenu(0, TextType.Main_Menu)

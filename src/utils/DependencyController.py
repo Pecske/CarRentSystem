@@ -8,15 +8,17 @@ from service.RentService import RentService
 from repository.CarRentalRepository import CarRentalRepository
 from repository.CarRepository import CarRepository
 from repository.RentRepository import RentRepository
-from utils.FileService import FileService
 from utils.FileHandler import FileHandler
 from utils.TextCache import TextCache
+from utils.ConfigHolder import ConfigHolder
 from typing import TypeVar
 
 T = TypeVar("T")
 
 
 class DependencyController(object):
+
+    _instance = None
 
     def __init__(self) -> None:
         self.dependencies = dict()
@@ -28,13 +30,19 @@ class DependencyController(object):
             CarService: self._get_car_service,
             RentService: self._get_rent_service,
             CarRentalService: self._get_car_rental_serivce,
-            FileService: self._get_file_service,
             CarRepository: self._get_car_repo,
             RentRepository: self._get_rent_repo,
             CarRentalRepository: self._get_car_rental_repo,
             FileHandler: self._get_file_handler,
             TextCache: self._get_text_cache,
+            ConfigHolder: self._get_config_holder,
         }
+
+    @classmethod
+    def get_instance(cls):
+        if cls._instance is None:
+            cls._instance = DependencyController()
+        return cls._instance
 
     def get_class(self, dependency: type[T]) -> T:
         if dependency in self.class_dict:
@@ -93,18 +101,6 @@ class DependencyController(object):
             )
         return self.dependencies.get(service_type)
 
-    def _get_file_service(self) -> FileService:
-        service_type = FileService
-        if service_type not in self.dependencies:
-            self.dependencies[service_type] = FileService(
-                self._get_car_rental_controller(),
-                self._get_car_controller(),
-                self._get_rent_controller(),
-                self._get_file_handler(),
-                self._get_text_cache(),
-            )
-        return self.dependencies.get(service_type)
-
     def _get_text_cache(self) -> TextCache:
         cache_type = TextCache
         if cache_type not in self.dependencies:
@@ -134,3 +130,9 @@ class DependencyController(object):
         if handler_type not in self.dependencies:
             self.dependencies[handler_type] = FileHandler()
         return self.dependencies.get(handler_type)
+
+    def _get_config_holder(self) -> ConfigHolder:
+        holder_type = ConfigHolder
+        if holder_type not in self.dependencies:
+            self.dependencies[holder_type] = ConfigHolder()
+        return self.dependencies.get(holder_type)

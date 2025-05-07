@@ -37,6 +37,7 @@ class TextType(Enum):
     Rent_Delete_Id = auto()
     Exit_Menu = auto()
     Exit_Sure_Exit = auto()
+    Exit_Save = auto()
     Back_Menu = auto()
     Rent_List_Menu = auto()
     Rent_List_Back = auto()

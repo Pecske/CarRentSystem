@@ -7,20 +7,22 @@ import sys
 class MainMenu:
 
     CAR_RENTAL_PATH = "resources/carrental.json"
-    RENTAL_PATH = "resources/rents.json"
+    RENTS_PATH = "resources/rents.json"
     LANGUAGE_PATH = "resources/texts.json"
 
     def __init__(self) -> None:
-        self.container = DependencyController()
+        self.container = DependencyController.get_instance()
         self._init_data()
-        self.factory = MenuFactory(self.container)
+        self.factory = MenuFactory()
 
     def _init_data(self) -> None:
-        file_service = self.container.get_class(FileService)
+        # file_service = self.container.get_class(FileService)
+        file_service: FileService = FileService.get_instance()
         try:
-            file_service.save_car_rental(self.CAR_RENTAL_PATH)
-            file_service.save_rents(self.RENTAL_PATH)
-            file_service.save_texts(self.LANGUAGE_PATH)
+            # file_service.save_car_rental(self.CAR_RENTAL_PATH)
+            # file_service.save_rents(self.RENTS_PATH)
+            # file_service.save_texts(self.LANGUAGE_PATH)
+            file_service.import_data()
 
         except Exception as e:
             print(str(e))

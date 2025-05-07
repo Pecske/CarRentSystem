@@ -68,7 +68,7 @@ class CarView(Serializeable):
 
     def serialize(self):
         return {
-            CATEGORY: str(self.get_category()),
+            CATEGORY: str(self.get_category().name),
             LICENCE_PLATE: self.get_licence_plate(),
             TYPE: self.get_type(),
             RENTAL_FEE: str(self.get_rental_fee()),
